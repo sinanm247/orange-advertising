@@ -1,0 +1,97 @@
+@import "../../../index.scss";
+
+.contact-us-section {
+  background: $primary;
+  color: $secondary;
+  padding: clamp(72px, 9vw, 140px) 24px clamp(80px, 10vw, 150px);
+
+  @media (min-width: 1025px) {
+    padding: clamp(90px, 8vw, 130px) 40px clamp(100px, 9vw, 150px);
+  }
+}
+
+.contact-us-section__inner {
+  width: min(1400px, 100%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+
+  @media (min-width: 1025px) {
+    grid-template-columns: minmax(420px, 0.95fr) minmax(500px, 1fr);
+    align-items: start;
+    gap: clamp(40px, 7vw, 120px);
+  }
+}
+
+.contact-us-section__left h2 {
+  margin: 0;
+  text-transform: uppercase;
+  font-family: "Helvena", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  font-size: clamp(52px, 8vw, 116px);
+}
+
+.contact-us-section__form {
+  display: grid;
+  gap: 18px;
+}
+
+.contact-us-section__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.contact-us-section__field {
+  display: grid;
+  gap: 8px;
+}
+
+.contact-us-section__field span {
+  font-size: clamp(11px, 0.95vw, 15px);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.95;
+}
+
+.contact-us-section__field input,
+.contact-us-section__field textarea {
+  width: 100%;
+  border: 0;
+  outline: none;
+  background: $secondary;
+  color: #444;
+  font-family: "Helvena", Helvetica, Arial, sans-serif;
+  font-size: clamp(14px, 1.1vw, 18px);
+  padding: 14px 16px;
+}
+
+.contact-us-section__field textarea {
+  min-height: clamp(130px, 20vw, 220px);
+  resize: vertical;
+}
+
+.contact-us-section__form button {
+  height: 48px;
+  border-radius: 999px;
+  border: 1px solid rgba($secondary, 0.8);
+  background: transparent;
+  color: $secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: clamp(12px, 1vw, 18px);
+  font-family: "Helvena", Helvetica, Arial, sans-serif;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.contact-us-section__form button:hover {
+  opacity: 0.75;
+}

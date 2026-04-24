@@ -1,0 +1,49 @@
+@import "../../../index.scss";
+
+.home-about {
+  background: $primary;
+  color: $secondary;
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 80px 24px;
+  overflow: hidden;
+}
+
+.home-about__container {
+  width: min(980px, 100%);
+  margin: 0 auto;
+}
+
+.home-about__title {
+  margin: 0;
+  font-family: "iBrand";
+  font-weight: 600;
+  line-height: 0.8;
+  letter-spacing: -0.02em;
+  text-align: center;
+  // text-transform: uppercase;
+  font-size: clamp(64px, 16vw, 200px);
+  display: grid;
+}
+
+.home-about__line {
+  opacity: 0;
+  transition:
+    transform 0.18s linear,
+    opacity 0.2s linear;
+}
+
+.home-about__description {
+  margin: clamp(28px, 4vw, 48px) auto 0;
+  max-width: 760px;
+  font-family: "Helvena", Helvetica, Arial, sans-serif;
+  text-align: center;
+  font-size: clamp(20px, 2.1vw, 40px);
+  line-height: 1.25;
+  font-weight: 300;
+  opacity: 0;
+  transform: translateY(35px);
+  transition: transform 0.2s linear, opacity 0.2s linear;
+}

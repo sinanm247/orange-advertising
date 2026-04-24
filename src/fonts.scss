@@ -1,0 +1,36 @@
+@font-face {
+  font-family: "Helvena";
+  src:
+    url("./assets/Fonts/Helvena/Helvena-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvena";
+  src:
+    url("./assets/Fonts/Helvena/Helvena-Light.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvena";
+  src:
+    url("./assets/Fonts/Helvena/Helvena-Semibold.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "iBrand";
+  src:
+    url("./assets/Fonts/IBrand/Ibrand.otf") format("opentype"),
+    url("./assets/Fonts/IBrand/Ibrand.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}

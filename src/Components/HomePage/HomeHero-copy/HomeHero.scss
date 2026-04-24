@@ -1,0 +1,59 @@
+@import "../../../index.scss";
+
+.home-hero {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 8% 0%, rgba(255, 111, 76, 0.92) 0, rgba(255, 111, 76, 0.1) 17%, transparent 28%),
+    radial-gradient(circle at 38% 18%, rgba(235, 77, 52, 0.88) 0, rgba(235, 77, 52, 0.16) 18%, transparent 30%),
+    radial-gradient(circle at 90% 2%, rgba(255, 97, 61, 0.95) 0, rgba(255, 97, 61, 0.14) 18%, transparent 32%),
+    radial-gradient(circle at 92% 90%, rgba(240, 58, 30, 0.95) 0, rgba(240, 58, 30, 0.14) 15%, transparent 30%),
+    radial-gradient(circle at 6% 90%, rgba(255, 118, 77, 0.95) 0, rgba(255, 118, 77, 0.14) 17%, transparent 30%),
+    #efede6;
+}
+
+.home-hero__grain {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.45;
+  background-image: radial-gradient(rgba(0, 0, 0, 0.25) 0.6px, transparent 0.6px);
+  background-size: 2px 2px;
+}
+
+.home-hero__art {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse at 52% 50%, rgba(255, 255, 255, 0.3) 0, transparent 45%),
+    radial-gradient(ellipse at 51% 48%, rgba(84, 84, 84, 0.13) 0, transparent 36%);
+}
+
+.home-hero__content {
+  position: relative;
+  z-index: 4;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 110px 40px 120px;
+
+  @media (max-width: 1024px) {
+    padding: 90px 24px 100px;
+  }
+}
+
+.home-hero__brand {
+  margin: 0;
+  color: #f3eedf;
+  font-family: "iBrand", "Montserrat", sans-serif;
+  font-size: clamp(82px, 22vw, 420px);
+  line-height: 0.85;
+  text-transform: capitalize;
+  text-align: center;
+  letter-spacing: -0.03em;
+  text-shadow: 0 2px 0 rgba(172, 151, 114, 0.15);
+}

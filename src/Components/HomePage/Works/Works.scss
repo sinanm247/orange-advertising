@@ -1,0 +1,120 @@
+@import "../../../index.scss";
+
+.home-works {
+  position: relative;
+  background: $primary;
+  color: $secondary;
+}
+
+.home-works__intro {
+  padding: 26px 24px 28px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+
+  @media (min-width: 1025px) {
+    padding: 28px 40px 34px;
+    grid-template-columns: 1fr minmax(260px, 520px);
+    align-items: end;
+    column-gap: 56px;
+  }
+}
+
+.home-works__intro-left {
+  min-width: 0;
+}
+
+.home-works__eyebrow {
+  text-transform: uppercase;
+  font-size: clamp(20px, 1.7vw, 30px);
+  margin: 0;
+  border-bottom: 1px solid rgba($secondary, 0.45);
+  padding-bottom: 10px;
+}
+
+.home-works__title {
+  margin: 12px 0 0;
+  font-family: "Helvena", Helvetica, Arial, sans-serif;
+  font-size: clamp(30px, 6vw, 60px);
+  line-height: 0.95;
+  text-transform: uppercase;
+  max-width: 620px;
+}
+
+.home-works__description {
+  margin: 0;
+  max-width: 520px;
+  justify-self: end;
+  text-align: right;
+  font-size: clamp(14px, 1.2vw, 22px);
+  line-height: 1.28;
+}
+
+.home-works__gallery-section {
+  position: relative;
+  height: 280vh;
+}
+
+.home-works__gallery-sticky {
+  position: sticky;
+  top: 92px;
+  height: 100vh;
+  overflow: hidden;
+  padding-top: 6px;
+}
+
+.home-works__gallery {
+  overflow: hidden;
+}
+
+.home-works__track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  padding: 0 24px 24px;
+  transition: transform 0.1s linear;
+
+  @media (min-width: 1025px) {
+    gap: 28px;
+    padding: 0 40px 24px;
+  }
+}
+
+.home-works__card {
+  width: min(72vw, 640px);
+  flex: 0 0 auto;
+}
+
+.home-works__image {
+  width: 100%;
+  aspect-ratio: 1.2 / 1;
+  object-fit: cover;
+  display: block;
+}
+
+.home-works__meta {
+  margin-top: 14px;
+  padding-top: 12px;
+}
+
+.home-works__meta span {
+  opacity: 0.85;
+  display: block;
+  font-size: 14px;
+}
+
+.home-works__meta h3 {
+  margin: 8px 0 0;
+  text-transform: uppercase;
+  font-size: clamp(25px, 5vw, 50px);
+  line-height: 0.95;
+  border-bottom: 1px solid rgba($secondary, 0.45);
+  padding-bottom: 8px;
+}
+
+.home-works__meta p {
+  margin: 8px 0 0;
+  font-size: clamp(14px, 1.6vw, 22px);
+  text-transform: uppercase;
+  opacity: 0.95;
+}

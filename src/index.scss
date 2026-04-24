@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import './fonts.scss';
+
+// Theme Colors
+$white: #ffffff;
+$black: #000000;
+$primary: #fe5001; // Orange
+$secondary: #fff9eb; // Cream
+$tertiary: #200f07; // Brown
+$quaternary: #ffd773; // Yellow
+
+:root {
+  // font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Helvena", Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color: $tertiary;
+  background-color: $secondary;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  font-weight: 500;
+  // color: #646cff;
+  text-decoration: inherit;
+}
+
+body {
+  margin: 0;
+  width: 100%;
+  min-height: 100vh;
+  font-family: "Helvena", Helvetica, Arial, sans-serif;
+  background: $secondary;
+  color: $tertiary;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+.section-container {
+  padding-left: 300px;
+  padding-right: 300px;
+  padding-top: 100px;
+  padding-bottom: 100px;
+
+  @media (max-width: 2000px) {
+    padding-left: 250px;
+    padding-right: 250px;
+  }
+
+  @media (max-width: 1800px) {
+    padding-left: 200px;
+    padding-right: 200px;
+  }
+
+  @media (max-width: 1600px) {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+  
+  @media (max-width: 768px) {
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  @media (max-width: 500px) {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}

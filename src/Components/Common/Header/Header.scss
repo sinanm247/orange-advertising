@@ -1,0 +1,67 @@
+@import "../../../index.scss";
+
+.site-header {
+  position: absolute;
+  inset: 28px 40px auto 40px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: rgba(255, 255, 255, 0.9);
+
+  @media (max-width: 1024px) {
+    inset: 20px 24px auto 24px;
+  }
+}
+
+.site-header__brand {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  color: rgba($primary, 0.7);
+  font-family: "iBrand";
+  font-size: clamp(82px, 24vw, 320px);
+  line-height: 0.85;
+  text-transform: capitalize;
+  text-align: center;
+  letter-spacing: -0.03em;
+  text-shadow: 0 2px 0 rgba(32, 15, 7, 0.2);
+  transform-origin: center center;
+  will-change: transform, color, opacity;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  z-index: 230;
+  pointer-events: none;
+  transition: opacity 0.15s linear;
+}
+
+.site-header__brand--image {
+  width: 300px;
+  height: 150px;
+  aspect-ratio: 2 / 1;
+  object-fit: contain;
+  text-shadow: none;
+}
+
+.site-header__nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 4vw, 82px);
+}
+
+.site-header__link,
+.site-header__follow {
+  color: rgba(255, 255, 255, 0.88);
+  font-family: "Helvena", Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: clamp(11px, 1.1vw, 22px);
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+.site-header__link:hover,
+.site-header__follow:hover {
+  opacity: 0.65;
+}
