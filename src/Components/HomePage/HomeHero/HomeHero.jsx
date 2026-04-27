@@ -2,8 +2,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Header from "../../Common/Header/Header";
 import "./HomeHero.scss";
 
-const heroVideo = "/src/assets/Banners/Banner-Video.mp4";
-const logo = "/src/assets/Logo/Logo-Secondary.png";
+import heroVideo from "../../../assets/Banners/Banner-Video.mp4";
+import logo from "../../../assets/Logo/Logo-Secondary.png";
 
 export default function HomeHero() {
   const sectionRef = useRef(null);
