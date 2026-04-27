@@ -11,7 +11,7 @@ const tickerItems = [
 
 export default function Footer() {
   return (
-    <footer className="site-footer">
+    <footer className="site-footer" id="footer">
       <div className="site-footer__actions">
         <a href="#" className="site-footer__pill">
           Project Inquiries

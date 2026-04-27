@@ -3,7 +3,8 @@ import Header from "../../Common/Header/Header";
 import "./HomeHero.scss";
 
 import heroVideo from "../../../assets/Banners/Banner-Video.mp4";
-import logo from "../../../assets/Logo/Logo-Secondary.png";
+import logoSecondary from "../../../assets/Logo/Logo-Secondary.png";
+import logoPrimary from "../../../assets/Logo/Logo-Primary.png";
 
 export default function HomeHero() {
   const sectionRef = useRef(null);
@@ -50,6 +51,13 @@ export default function HomeHero() {
   }, []);
 
   const motionStyles = useMemo(() => {
+    const mixChannel = (from, to, phase) => Math.round(from + (to - from) * phase);
+    const mixRgb = (from, to, phase) => ({
+      r: mixChannel(from.r, to.r, phase),
+      g: mixChannel(from.g, to.g, phase),
+      b: mixChannel(from.b, to.b, phase),
+    });
+
     const easeOut = 1 - (1 - scrollProgress) ** 3;
     const latePhase = Math.min(Math.max((scrollProgress - 0.55) / 0.45, 0), 1);
     const colorPhase = Math.min(Math.max((scrollProgress - 0.48) / 0.24, 0), 1);
@@ -66,13 +74,17 @@ export default function HomeHero() {
     const brandG = Math.round(80 + (249 - 80) * colorPhase);
     const brandB = Math.round(1 + (235 - 1) * colorPhase);
     const brandA = 0.7 + (1 - 0.7) * colorPhase;
-    const brandColor = `rgba(${brandR}, ${brandG}, ${brandB}, ${brandA})`;
+    const aboutTransitionPhase = Math.min(Math.max((scrollProgress - 0.78) / 0.22, 0), 1);
+    const brandToPrimaryR = Math.round(brandR + (254 - brandR) * aboutTransitionPhase);
+    const brandToPrimaryG = Math.round(brandG + (80 - brandG) * aboutTransitionPhase);
+    const brandToPrimaryB = Math.round(brandB + (1 - brandB) * aboutTransitionPhase);
+    const brandColor = `rgba(${brandToPrimaryR}, ${brandToPrimaryG}, ${brandToPrimaryB}, ${brandA})`;
 
     const closePhase = Math.min(Math.max((scrollProgress - 0.48) / 1, 0), 1);
     const normalizedClosePhase = Math.min(closePhase / 0.52, 1);
     const videoScale = 1 - 0.42 * normalizedClosePhase;
-    const clipInset = 50 * normalizedClosePhase ** 1.45;
-    const primaryBgOpacity = 0.12 + 0.88 * easeOut;
+    const clipInset = 52 * normalizedClosePhase ** 1.45;
+    const primaryBgOpacity = aboutTransitionPhase;
     const navWidthEstimate = viewport.width > 1024 ? 620 : 360;
     const horizontalPadding = viewport.width > 1024 ? 40 : 24;
     const maxSafeShift = Math.max(
@@ -115,6 +127,42 @@ export default function HomeHero() {
     }
     const footerTextRotate = baseTextRotate * (1 - easedFooterFlipPhase);
     const footerImageRotate = baseImageRotate + (-90 - baseImageRotate) * easedFooterFlipPhase;
+    const worksSection = document.getElementById("works");
+    const servicesSection = document.getElementById("services");
+    const contactSection = document.getElementById("contact");
+    const footerSection = document.getElementById("footer");
+    const worksRect = worksSection?.getBoundingClientRect();
+    const servicesRect = servicesSection?.getBoundingClientRect();
+    const contactRect = contactSection?.getBoundingClientRect();
+    const footerSectionRect = footerSection?.getBoundingClientRect();
+    const worksStart = viewport.height * 0.9;
+    const worksEnd = viewport.height * 0.2;
+    const worksBgPhase = worksRect
+      ? Math.min(Math.max((worksStart - worksRect.top) / (worksStart - worksEnd), 0), 1)
+      : 0;
+    const servicesBgPhase = servicesRect
+      ? Math.min(Math.max((worksStart - servicesRect.top) / (worksStart - worksEnd), 0), 1)
+      : 0;
+    const contactBgPhase = contactRect
+      ? Math.min(Math.max((worksStart - contactRect.top) / (worksStart - worksEnd), 0), 1)
+      : 0;
+    const footerBgPhase = footerSectionRect
+      ? Math.min(Math.max((worksStart - footerSectionRect.top) / (worksStart - worksEnd), 0), 1)
+      : 0;
+    const primaryWeightAfterHero = 1 - aboutTransitionPhase;
+    const primaryWeightFromSections =
+      worksBgPhase * (1 - servicesBgPhase) + contactBgPhase * (1 - footerBgPhase);
+    const primaryWeight = Math.min(
+      Math.max(
+        primaryWeightAfterHero + (1 - primaryWeightAfterHero) * primaryWeightFromSections,
+        0
+      ),
+      1
+    );
+    const bgRgb = mixRgb({ r: 255, g: 249, b: 235 }, { r: 254, g: 80, b: 1 }, primaryWeight);
+    const fgRgb = mixRgb({ r: 254, g: 80, b: 1 }, { r: 255, g: 249, b: 235 }, primaryWeight);
+    const secondaryLogoOpacity = footerImageOpacity * primaryWeight;
+    const primaryLogoOpacity = footerImageOpacity * (1 - primaryWeight);
 
     return {
       videoShell: {
@@ -129,10 +177,15 @@ export default function HomeHero() {
       },
       brandImage: {
         transform: `${imageLogoTransform} rotateY(${footerImageRotate}deg)`,
-        opacity: footerImageOpacity,
+        opacity: secondaryLogoOpacity,
+      },
+      brandImageAlt: {
+        transform: `${imageLogoTransform} rotateY(${footerImageRotate}deg)`,
+        opacity: primaryLogoOpacity,
       },
       headerShell: {
-        backgroundColor: `rgba(254, 80, 1, ${headerBgPhase})`,
+        backgroundColor: `rgba(${bgRgb.r}, ${bgRgb.g}, ${bgRgb.b}, ${headerBgPhase})`,
+        color: `rgba(${fgRgb.r}, ${fgRgb.g}, ${fgRgb.b}, 0.92)`,
       },
       headerNav: {
         transform: `translateX(${headerNavShift * (1 - easedFooterMovePhase)}px)`,
@@ -149,9 +202,11 @@ export default function HomeHero() {
         navStyle={motionStyles.headerNav}
         hideFollow
         showAnimatedLogo
-        logoImageSrc={logo}
+        logoImageSrc={logoSecondary}
+        logoAltImageSrc={logoPrimary}
         logoTextStyle={motionStyles.brandText}
         logoImageStyle={motionStyles.brandImage}
+        logoAltImageStyle={motionStyles.brandImageAlt}
       />
 
       <section className="home-hero" ref={sectionRef}>

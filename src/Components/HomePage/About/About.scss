@@ -1,8 +1,9 @@
 @import "../../../index.scss";
 
 .home-about {
-  background: $primary;
-  color: $secondary;
+  position: relative;
+  background: transparent;
+  color: $primary;
   width: 100%;
   min-height: 100vh;
   display: grid;
@@ -12,6 +13,8 @@
 }
 
 .home-about__container {
+  position: relative;
+  z-index: 1;
   width: min(980px, 100%);
   margin: 0 auto;
 }

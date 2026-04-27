@@ -38,7 +38,6 @@ export default function About() {
   const rightPhase = sharedPhase;
   const centerPhase = sharedPhase;
   const descriptionPhase = Math.min(Math.max((sharedPhase - 0.08) / 0.92, 0), 1);
-
   const leftDistance = 420 * (1 - leftPhase);
   const rightDistance = 420 * (1 - rightPhase);
   const centerRise = 70 * (1 - centerPhase);

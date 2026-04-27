@@ -6,7 +6,7 @@
   width: 100%;
   overflow: clip;
   isolation: isolate;
-  background: $secondary;
+  background: $primary;
 }
 
 .home-hero__sticky {
@@ -21,7 +21,7 @@
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: $primary;
+  background: $secondary;
   pointer-events: none;
 }
 
@@ -29,6 +29,7 @@
   position: absolute;
   inset: 0;
   z-index: 1;
+  background: $primary;
   transform-origin: center center;
   will-change: transform, clip-path;
 }
@@ -114,7 +115,7 @@
 }
 
 .home-hero__header-common .site-header__link {
-  color: rgba(255, 255, 255, 0.88);
+  color: currentColor;
   font-family: "Helvena", Helvetica, Arial, sans-serif;
   text-transform: uppercase;
   letter-spacing: 1px;

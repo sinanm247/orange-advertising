@@ -11,6 +11,8 @@ export default function Header({
   logoTextStyle,
   logoImageStyle,
   logoImageSrc,
+  logoAltImageSrc,
+  logoAltImageStyle,
   showAnimatedLogo = false,
 }) {
   return (
@@ -26,6 +28,14 @@ export default function Header({
             className="site-header__brand site-header__brand--image"
             style={logoImageStyle}
           />
+          {logoAltImageSrc && (
+            <img
+              src={logoAltImageSrc}
+              alt="Orange logo alt"
+              className="site-header__brand site-header__brand--image"
+              style={logoAltImageStyle}
+            />
+          )}
         </>
       )}
 
