@@ -189,6 +189,7 @@ export default function HomeHero() {
       },
       headerNav: {
         transform: `translateX(${headerNavShift * (1 - easedFooterMovePhase)}px)`,
+        marginRight: `${80 * (1 - footerMovePhase)}px`,
       },
       cta: { opacity: ctaOpacity },
     };
@@ -197,7 +198,7 @@ export default function HomeHero() {
   return (
     <>
       <Header
-        className="home-hero__header-common"
+        className="site-header--shared site-header--home-start"
         style={motionStyles.headerShell}
         navStyle={motionStyles.headerNav}
         hideFollow

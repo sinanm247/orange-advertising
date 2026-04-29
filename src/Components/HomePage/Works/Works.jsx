@@ -1,51 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import "./Works.scss";
-
-import Image1 from "../../../assets/Works/Image-1.webp";
-import Image2 from "../../../assets/Works/Image-2.jpg";
-import Image3 from "../../../assets/Works/Image-3.webp";
-import Image4 from "../../../assets/Works/Image-4.jpeg";
-import Image5 from "../../../assets/Works/Image-5.jpg";
-import Image6 from "../../../assets/Works/Image-6.jpg";
-
-const works = [
-  {
-    id: "001",
-    title: "Advertisement",
-    subtitle: "Boards - Hoardings and all",
-    image: Image1,
-  },
-  {
-    id: "002",
-    title: "Signage",
-    subtitle: "Brand Sign Systems",
-    image: Image2,
-  },
-  {
-    id: "003",
-    title: "Floor Graphics",
-    subtitle: "Wayfinding and Floor Branding",
-    image: Image3,
-  },
-  {
-    id: "004",
-    title: "Wall Signs",
-    subtitle: "Interior and Exterior Wall Displays",
-    image: Image4,
-  },
-  {
-    id: "005",
-    title: "Structural Design",
-    subtitle: "Custom Structural Installations",
-    image: Image5,
-  },
-  {
-    id: "006",
-    title: "POS Materials",
-    subtitle: "Point of Sale Display Assets",
-    image: Image6,
-  },
-];
+import works from "../../../data/worksData";
 
 export default function Works() {
   const gallerySectionRef = useRef(null);
@@ -95,9 +50,9 @@ export default function Works() {
   return (
     <section className="home-works" id="works">
       <div className="home-works__intro">
+        <p className="home-works__eyebrow">Works</p>
         <div className="home-works__intro-left">
-          <p className="home-works__eyebrow">Works</p>
-          <h2 className="home-works__title">Listen To Your Eyes</h2>
+          <h2 className="home-works__title quaternary-color">Listen To Your Eyes</h2>
         </div>
         <p className="home-works__description">
           We create visual-first campaigns and identities that hold attention,
@@ -113,8 +68,8 @@ export default function Works() {
                 <article className="home-works__card" key={work.id}>
                   <img src={work.image} alt={work.title} className="home-works__image" />
                   <div className="home-works__meta">
-                    <span>({work.id})</span>
-                    <h3>{work.title}</h3>
+                    <span className="tertiary-color">({work.id})</span>
+                    <h3 className="quaternary-color">{work.title}</h3>
                     <p>{work.subtitle}</p>
                   </div>
                 </article>

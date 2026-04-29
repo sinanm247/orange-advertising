@@ -161,9 +161,9 @@ export default function Services() {
   return (
     <section className="home-services" id="services">
       <div className="home-services__intro">
+        <p className="home-services__eyebrow">Services</p>
         <div className="home-services__intro-left">
-          <p className="home-services__eyebrow">Services</p>
-          <h2 className="home-services__title">Undying Bonds</h2>
+          <h2 className="home-services__title tertiary-color">Undying Bonds</h2>
         </div>
         <p className="home-services__description">
           Full-spectrum print and fabrication support from file preparation to
@@ -195,7 +195,7 @@ export default function Services() {
             <p>{card.description}</p>
             <ul>
               {card.items.map((item) => (
-                <li key={item}>{item}</li>
+                <li className="tertiary-color" key={item}>{item}</li>
               ))}
             </ul>
           </article>

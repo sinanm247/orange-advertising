@@ -1,0 +1,25 @@
+@import "../../../index.scss";
+
+.about-us-intro {
+  display: grid;
+  gap: 20px;
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.about-us-intro h2 {
+  margin: 0;
+  text-transform: uppercase;
+  font-size: clamp(20px, 1.7vw, 30px);
+  color: rgba($quaternary, 0.98);
+  font-weight: 500;
+}
+
+.about-us-intro p {
+  margin: 0;
+  max-width: 820px;
+  font-size: clamp(20px, 1.8vw, 30px);
+  line-height: 1.25;
+  font-weight: 300;
+  color: rgba($secondary, 0.95);
+}

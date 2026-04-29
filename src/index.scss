@@ -9,6 +9,19 @@ $secondary: #fff9eb; // Cream
 $tertiary: #200f07; // Brown
 $quaternary: #ffd773; // Yellow
 
+.primary-color {
+  color: $primary;
+}
+
+.secondary-color {
+  color: $secondary;
+}
+.tertiary-color {
+  color: $tertiary;
+}
+.quaternary-color {
+  color: $quaternary;
+}
 :root {
   // font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-family: "Helvena", Helvetica, Arial, sans-serif;
@@ -69,9 +82,6 @@ button {
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
 }
 button:focus,
 button:focus-visible {

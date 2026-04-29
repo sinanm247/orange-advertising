@@ -1,0 +1,43 @@
+@import "../../../index.scss";
+
+.about-us-clients {
+  padding-top: clamp(56px, 8vw, 120px);
+  padding-bottom: clamp(70px, 9vw, 140px);
+}
+
+.about-us-clients__label {
+  margin: 0;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: clamp(20px, 1.7vw, 30px);
+  color: rgba($quaternary, 0.98);
+  font-weight: 500;
+}
+
+.about-us-clients h3 {
+  margin: 10px 0 0;
+  text-transform: uppercase;
+  font-size: clamp(30px, 4.2vw, 76px);
+  line-height: 0.92;
+  color: $secondary;
+}
+
+.about-us-clients__grid {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.about-us-clients__grid div {
+  border: 1px solid rgba($secondary, 0.55);
+  border-radius: 999px;
+  padding: 14px 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: rgba($secondary, 0.94);
+}

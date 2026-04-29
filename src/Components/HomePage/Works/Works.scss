@@ -22,6 +22,7 @@
 
 .home-works__intro-left {
   min-width: 0;
+  grid-column: 1;
 }
 
 .home-works__eyebrow {
@@ -30,6 +31,7 @@
   margin: 0;
   border-bottom: 1px solid rgba($secondary, 0.45);
   padding-bottom: 10px;
+  grid-column: 1 / -1;
 }
 
 .home-works__title {
@@ -44,10 +46,15 @@
 .home-works__description {
   margin: 0;
   max-width: 520px;
-  justify-self: end;
-  text-align: right;
   font-size: clamp(14px, 1.2vw, 22px);
   line-height: 1.28;
+
+  @media (min-width: 1025px) {
+    grid-column: 2;
+    justify-self: end;
+    align-self: end;
+    text-align: right;
+  }
 }
 
 .home-works__gallery-section {
