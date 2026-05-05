@@ -6,11 +6,17 @@ import Header from "./Components/Common/Header/Header";
 import Footer from "./Components/Common/Footer/Footer";
 import routes from "./Routes/Routes";
 import ComingSoon from "./Components/ComingSoon/ComingSoon";
-import logoSecondary from "./assets/Logo/Logo-Secondary.png";
-import logoPrimary from "./assets/Logo/Logo-Primary.png";
+import logoSecondary from "./assets/Logo/Logo-Icon-Secondary.png";
+import logoPrimary from "./assets/Logo/Logo-Icon-Primary.png";
 
 // Set to true to show coming soon page, false for normal site
 const SHOW_COMING_SOON = false;
+
+/** Map 0–1 with smooth ends (Ken Perlin), used for delayed bg crossfades. */
+function smoothstep01(t) {
+  const u = Math.min(Math.max(t, 0), 1);
+  return u * u * (3 - 2 * u);
+}
 
 export default function App() {
   const location = useLocation();
@@ -39,18 +45,31 @@ export default function App() {
     }
 
     const updateLayoutPhase = () => {
+      const stableViewportHeight = viewport.height || window.innerHeight;
       setScrollY(window.scrollY);
-      setViewport({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
 
       const anchors = Array.from(document.querySelectorAll("[data-bg-tone]")).map((node) => {
+        const rect = node.getBoundingClientRect();
+        const sectionTop = window.scrollY + rect.top;
         const offsetRatio = Number(node.getAttribute("data-bg-offset") ?? 0);
-        const offsetPx = window.innerHeight * offsetRatio;
+        const offsetPx = stableViewportHeight * offsetRatio;
+        const delayRaw = node.getAttribute("data-bg-delay-blend");
+        const delayFrac =
+          delayRaw != null && delayRaw !== "" ? Number(delayRaw) : Number.NaN;
+        const hasDelay =
+          Number.isFinite(delayFrac) && delayFrac > 0 && delayFrac <= 1;
+
+        const top = sectionTop + offsetPx;
+
+        const toneAttr = Number(node.getAttribute("data-bg-tone"));
+        const tone = Number.isFinite(toneAttr) ? toneAttr : 1;
+
         return {
-          top: window.scrollY + node.getBoundingClientRect().top + offsetPx,
-          tone: Number(node.getAttribute("data-bg-tone")),
+          sectionTop,
+          top,
+          tone,
+          nodeEl: hasDelay ? node : null,
+          delayBlendFrac: hasDelay ? delayFrac : null,
         };
       });
 
@@ -59,41 +78,83 @@ export default function App() {
         return;
       }
 
-      anchors.sort((a, b) => a.top - b.top);
-      const probeY = window.scrollY + window.innerHeight * 0.55;
+      // Order by true section position so tall offsets cannot invert narrative (e.g. hero vs visual).
+      anchors.sort((a, b) => a.sectionTop - b.sectionTop);
+      const probeY = window.scrollY + stableViewportHeight * 0.55;
 
-      if (probeY <= anchors[0].top) {
+      const minTop = Math.min(...anchors.map((a) => a.top));
+      const maxTop = Math.max(...anchors.map((a) => a.top));
+
+      if (probeY <= minTop) {
         setNonHomePrimaryWeight(anchors[0].tone);
         return;
       }
 
-      const last = anchors[anchors.length - 1];
-      if (probeY >= last.top) {
-        setNonHomePrimaryWeight(last.tone);
+      if (probeY >= maxTop) {
+        setNonHomePrimaryWeight(anchors[anchors.length - 1].tone);
         return;
       }
 
       for (let index = 0; index < anchors.length - 1; index += 1) {
         const current = anchors[index];
         const next = anchors[index + 1];
-        if (probeY >= current.top && probeY <= next.top) {
-          const range = Math.max(next.top - current.top, 1);
-          const phase = (probeY - current.top) / range;
+        const lo = Math.min(current.top, next.top);
+        const hi = Math.max(current.top, next.top);
+        if (probeY < lo || probeY > hi) {
+          continue;
+        }
+
+        if (next.nodeEl != null && next.delayBlendFrac != null) {
+          const r = next.nodeEl.getBoundingClientRect();
+          const vh = stableViewportHeight;
+          const visible = Math.max(0, Math.min(r.bottom, vh) - Math.max(r.top, 0));
+          const ratio = r.height > 0 ? visible / r.height : 0;
+          if (ratio < next.delayBlendFrac) {
+            setNonHomePrimaryWeight(current.tone);
+            return;
+          }
+          const span = Math.max(1 - next.delayBlendFrac, 1e-4);
+          const ratioT = Math.min(Math.max((ratio - next.delayBlendFrac) / span, 0), 1);
+          const segSpan = Math.max(hi - lo, 1);
+          const scrollT = Math.min(Math.max((probeY - lo) / segSpan, 0), 1);
+          // Visibility alone can jump the new tone in; require both visibility and scroll
+          // progress so the incoming tone eases in. Product + smoothstep softens the fade-in.
+          const phase = smoothstep01(ratioT) * smoothstep01(scrollT);
           setNonHomePrimaryWeight(current.tone + (next.tone - current.tone) * phase);
           return;
         }
+
+        const toneFrom = current.top <= next.top ? current.tone : next.tone;
+        const toneTo = current.top <= next.top ? next.tone : current.tone;
+        const range = Math.max(hi - lo, 1);
+        const phase = (probeY - lo) / range;
+        setNonHomePrimaryWeight(toneFrom + (toneTo - toneFrom) * phase);
+        return;
       }
     };
 
+    const updateViewport = () => {
+      setViewport({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    const handleResize = () => {
+      updateViewport();
+      updateLayoutPhase();
+    };
+
+    updateViewport();
     updateLayoutPhase();
     window.addEventListener("scroll", updateLayoutPhase, { passive: true });
-    window.addEventListener("resize", updateLayoutPhase);
+    window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("scroll", updateLayoutPhase);
-      window.removeEventListener("resize", updateLayoutPhase);
+      window.removeEventListener("resize", handleResize);
     };
-  }, [isHomeRoute, location.pathname, pageLoading]);
+  }, [isHomeRoute, location.pathname, pageLoading, viewport.height]);
 
   const nonHomeStyles = useMemo(() => {
     if (isHomeRoute) {
@@ -103,15 +164,18 @@ export default function App() {
     const mixChannel = (from, to, phase) => Math.round(from + (to - from) * phase);
     const primary = { r: 254, g: 80, b: 1 };
     const secondary = { r: 255, g: 249, b: 235 };
+    const stableViewportHeight = viewport.height || window.innerHeight;
     const footerNode = document.getElementById("footer");
     const footerRect = footerNode?.getBoundingClientRect();
-    const footerBgStart = window.innerHeight * 0.72;
-    const footerBgEnd = window.innerHeight * 0.2;
+    const footerBgStart = stableViewportHeight * 0.72;
+    const footerBgEnd = stableViewportHeight * 0.2;
     const footerBgPhase = footerRect
       ? Math.min(Math.max((footerBgStart - footerRect.top) / (footerBgStart - footerBgEnd), 0), 1)
       : 0;
-    const footerMotionStart = window.innerHeight * 0.52;
-    const footerMotionEnd = window.innerHeight * 0.08;
+    const footerMotionStart =
+      stableViewportHeight * (viewport.width <= 460 ? 0.22 : 0.52);
+    const footerMotionEnd =
+      stableViewportHeight * (viewport.width <= 460 ? 0.04 : 0.08);
     const footerMotionPhase = footerRect
       ? Math.min(
           Math.max((footerMotionStart - footerRect.top) / (footerMotionStart - footerMotionEnd), 0),
@@ -137,8 +201,8 @@ export default function App() {
     const easedFooterFlipPhase = 1 - (1 - footerFlipPhase) ** 3;
     const centerX = viewport.width / 2;
     const centerY = viewport.height / 2;
-    const headerX = viewport.width > 1024 ? 145 : 95;
-    const headerY = viewport.width > 1024 ? 48 : 40;
+    const headerX = viewport.width > 1024 ? 145 : 85;
+    const headerY = viewport.width > 1024 ? 48 : 45;
     const baseShiftX = headerX - centerX;
     const baseShiftY = headerY - centerY;
     const headerBrandScale = 0.16;

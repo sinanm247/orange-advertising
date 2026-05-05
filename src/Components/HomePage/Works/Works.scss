@@ -67,7 +67,6 @@
   top: 92px;
   height: 100vh;
   overflow: hidden;
-  padding-top: 6px;
 }
 
 .home-works__gallery {
@@ -97,6 +96,22 @@
   aspect-ratio: 1.2 / 1;
   object-fit: cover;
   display: block;
+}
+
+@media (max-width: 1024px) {
+  .home-works__gallery-sticky {
+    top: 0;
+  }
+
+  .home-works__gallery {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .home-works__image {
+    aspect-ratio: 3 / 4;
+  }
 }
 
 .home-works__meta {

@@ -13,7 +13,11 @@ const clientNames = [
 
 export default function Clients() {
   return (
-    <section className="about-us-clients section-container" data-bg-tone="1">
+    <section
+      className="about-us-clients section-container"
+      data-bg-tone="1"
+      data-bg-delay-blend="0.3"
+    >
       <p className="about-us-clients__label">Clients</p>
       <h3>Trusted by Brands Across UAE</h3>
       <div className="about-us-clients__grid">

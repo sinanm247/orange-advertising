@@ -3,8 +3,8 @@ import Header from "../../Common/Header/Header";
 import "./HomeHero.scss";
 
 import heroVideo from "../../../assets/Banners/Banner-Video.mp4";
-import logoSecondary from "../../../assets/Logo/Logo-Secondary.png";
-import logoPrimary from "../../../assets/Logo/Logo-Primary.png";
+import logoSecondary from "../../../assets/Logo/Logo-Icon-Secondary.png";
+import logoPrimary from "../../../assets/Logo/Logo-Icon-Primary.png";
 
 export default function HomeHero() {
   const sectionRef = useRef(null);
@@ -65,8 +65,8 @@ export default function HomeHero() {
 
     const centerX = viewport.width / 2;
     const centerY = viewport.height / 2;
-    const targetX = viewport.width > 1024 ? 145 : 95;
-    const targetY = viewport.width > 1024 ? 48 : 40;
+    const targetX = viewport.width > 1024 ? 145 : 75;
+    const targetY = viewport.width > 1024 ? 48 : 42;
     const brandShiftX = (targetX - centerX) * latePhase;
     const brandShiftY = (targetY - centerY) * latePhase;
     const brandScale = 1 - 0.84 * latePhase;
@@ -189,7 +189,7 @@ export default function HomeHero() {
       },
       headerNav: {
         transform: `translateX(${headerNavShift * (1 - easedFooterMovePhase)}px)`,
-        marginRight: `${80 * (1 - footerMovePhase)}px`,
+        marginRight: `${80 * latePhase * (1 - footerMovePhase)}px`,
       },
       cta: { opacity: ctaOpacity },
     };
