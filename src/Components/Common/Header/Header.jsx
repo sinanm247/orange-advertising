@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigationTransition } from "../../../Context/NavigationTransitionContext.jsx";
 import "./Header.scss";
 
 const navItems = 
@@ -69,6 +70,7 @@ export default function Header({
   logoAltImageStyle,
   showAnimatedLogo = false,
 }) {
+  const { navigateWithLoader } = useNavigationTransition() ?? {};
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
 
@@ -87,6 +89,25 @@ export default function Header({
 
   const navClassName = `site-header__nav ${isMenuOpen ? "is-open" : ""}`.trim();
   const appliedNavStyle = isMobile ? undefined : navStyle;
+
+  const handleInternalRouteClick = (event, href) => {
+    if (!href || href === "#") {
+      return;
+    }
+    if (!navigateWithLoader) {
+      return;
+    }
+    if (/^(https?:|mailto:|tel:)/i.test(href)) {
+      return;
+    }
+    if (href.startsWith("#")) {
+      return;
+    }
+    event.preventDefault();
+    navigateWithLoader(href);
+    setIsMenuOpen(false);
+  };
+
   const useLightTone = isLightColor(style?.color);
   const mobileToggleStyle = isMenuOpen
     ? {
@@ -104,7 +125,12 @@ export default function Header({
       style={style}
     >
       {logoSrc && (
-        <a href="/" className="site-header__logo-link" aria-label="Go to home page">
+        <a
+          href="/"
+          className="site-header__logo-link"
+          aria-label="Go to home page"
+          onClick={(e) => handleInternalRouteClick(e, "/")}
+        >
           <img src={logoSrc} alt="Orange logo" className="site-header__logo-static" />
         </a>
       )}
@@ -120,6 +146,7 @@ export default function Header({
             aria-label="Go to home page"
             className="site-header__brand site-header__brand--image site-header__brand-link site-header__brand--image-secondary"
             style={logoImageStyle}
+            onClick={(e) => handleInternalRouteClick(e, "/")}
           >
             <img src={logoImageSrc} alt="Orange logo" className="site-header__brand-image-inner" />
           </a>
@@ -129,6 +156,7 @@ export default function Header({
               aria-label="Go to home page"
               className="site-header__brand site-header__brand--image site-header__brand-link site-header__brand--image-alt"
               style={logoAltImageStyle}
+              onClick={(e) => handleInternalRouteClick(e, "/")}
             >
               <img
                 src={logoAltImageSrc}
@@ -159,7 +187,7 @@ export default function Header({
             key={item.id}
             href={item.href}
             className="site-header__link"
-            onClick={() => setIsMenuOpen(false)}
+            onClick={(e) => handleInternalRouteClick(e, item.href)}
           >
             {item.label}
           </a>

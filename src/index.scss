@@ -58,6 +58,8 @@ body {
   color: $tertiary;
 }
 
+/* Loader panel is opaque; html/body tint is set inline during transitions (see App.jsx). */
+
 #root {
   width: 100%;
   min-height: 100vh;

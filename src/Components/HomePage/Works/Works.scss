@@ -59,6 +59,7 @@
 
 .home-works__gallery-section {
   position: relative;
+  /* taller = slower horizontal scrub relative to vertical scroll (was 280vh) */
   height: 280vh;
 }
 
@@ -78,7 +79,9 @@
   gap: 24px;
   width: max-content;
   padding: 0 24px 24px;
-  transition: transform 0.1s linear;
+  transform: translate3d(0, 0, 0);
+  /* GPU layer + no React style churn — transform applied in JS on scroll */
+  will-change: transform;
 
   @media (min-width: 1025px) {
     gap: 28px;

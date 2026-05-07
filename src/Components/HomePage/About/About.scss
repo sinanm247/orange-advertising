@@ -33,9 +33,7 @@
 
 .home-about__line {
   opacity: 0;
-  transition:
-    transform 0.18s linear,
-    opacity 0.2s linear;
+  /* no transition: transform/opacity are driven by scroll in JS — transitions fight updates and buzz on mobile */
 }
 
 .home-about__description {
@@ -48,5 +46,4 @@
   font-weight: 300;
   opacity: 0;
   transform: translateY(35px);
-  transition: transform 0.2s linear, opacity 0.2s linear;
 }

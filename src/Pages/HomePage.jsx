@@ -14,6 +14,8 @@ export default function HomePage() {
   const [footerBgPhase, setFooterBgPhase] = useState(0);
 
   useEffect(() => {
+    let rafId = 0;
+
     const updateBgPhase = () => {
       const worksSection = document.getElementById("works");
       const servicesSection = document.getElementById("services");
@@ -42,13 +44,22 @@ export default function HomePage() {
       setFooterBgPhase(footerPhase);
     };
 
+    const schedule = () => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = 0;
+        updateBgPhase();
+      });
+    };
+
     updateBgPhase();
-    window.addEventListener("scroll", updateBgPhase, { passive: true });
-    window.addEventListener("resize", updateBgPhase);
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
 
     return () => {
-      window.removeEventListener("scroll", updateBgPhase);
-      window.removeEventListener("resize", updateBgPhase);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
 

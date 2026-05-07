@@ -1,22 +1,48 @@
+@import '../../index.scss';
+
+$loader-slide-duration: 0.72s;
+$loader-slide-ease: cubic-bezier(0.33, 1, 0.53, 1);
+// Keep in sync with App.jsx: LOADER_SLIDE_MS + cssCubicBezierMapping(0.33, 1, 0.53, 1) for window scroll.
+
 .app-loader-container {
   position: fixed;
-  inset: 0;
-  background: #000;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  background: $primary;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
   overflow: hidden;
-  pointer-events: none;
-  transition: opacity 0.8s ease, visibility 0.8s ease;
-  opacity: 0;
-  visibility: hidden;
+  pointer-events: auto;
+  backface-visibility: hidden;
+  transform: translate3d(0, 100%, 0);
+  transition: transform $loader-slide-duration $loader-slide-ease;
+  will-change: transform;
 
-  .logo {
+  &[data-phase="enter"] {
+    transform: translate3d(0, 100%, 0);
+    transition: none;
+  }
+
+  &[data-phase="on"] {
+    transform: translate3d(0, 0, 0);
+  }
+
+  &[data-phase="exit"] {
+    transform: translate3d(0, -100%, 0);
+  }
+
+  &__logo {
     width: 300px;
     opacity: 0;
-    transform: scale(0.8);
-    transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s;
+    transform: scale(0.92);
+    transition:
+      opacity 0.45s ease 0.12s,
+      transform 0.45s ease 0.12s;
     z-index: 3;
 
     @media (max-width: 768px) {
@@ -27,20 +53,17 @@
       width: 180px;
     }
   }
-}
 
-.app-loader-container.show {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-
-  .logo {
+  &[data-phase="on"] &__logo,
+  &[data-phase="exit"] &__logo {
     opacity: 1;
     transform: scale(1);
   }
-}
 
-.app-loader-container.hide {
-  opacity: 0;
-  visibility: hidden;
+  &[data-phase="exit"] &__logo {
+    opacity: 0.85;
+    transition:
+      opacity 0.4s ease,
+      transform 0.4s ease;
+  }
 }

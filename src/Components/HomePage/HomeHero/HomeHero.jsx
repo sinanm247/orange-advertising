@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Header from "../../Common/Header/Header";
 import "./HomeHero.scss";
+import AnimatedButton from "../../../Styles/AnimatedButton/AnimatedButton";
 
 import heroVideo from "../../../assets/Banners/Banner-Video.mp4";
 import logoSecondary from "../../../assets/Logo/Logo-Icon-Secondary.png";
@@ -226,9 +227,12 @@ export default function HomeHero() {
 
           <div className="home-hero__content" />
 
-          <a href="#" className="home-hero__cta" style={motionStyles.cta}>
-            Start a Project
-          </a>
+          <AnimatedButton
+            href="#project"
+            label="Start a Project"
+            className="home-hero__cta"
+            style={motionStyles.cta}
+          />
         </div>
       </section>
     </>

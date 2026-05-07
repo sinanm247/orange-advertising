@@ -1,4 +1,5 @@
 import "./Footer.scss";
+import AnimatedButton2 from "../../../Styles/AnimatedButton2/AnimatedButton2";
 
 const tickerItems = [
   "Dubai Office Since 2004",
@@ -13,15 +14,9 @@ export default function Footer() {
   return (
     <footer className="site-footer" id="footer">
       <div className="site-footer__actions">
-        <a href="#" className="site-footer__pill">
-          Project Inquiries
-        </a>
-        <a href="#" className="site-footer__pill">
-          Make a Call
-        </a>
-        <a href="#" className="site-footer__pill">
-          Chat with Us
-        </a>
+        <AnimatedButton2 href="#" label="Project Inquiries" className="site-footer__pill" />
+        <AnimatedButton2 href="#" label="Make a Call" className="site-footer__pill" />
+        <AnimatedButton2 href="#" label="Chat with Us" className="site-footer__pill" />
       </div>
 
       <div className="site-footer__ticker" aria-label="Company highlights">

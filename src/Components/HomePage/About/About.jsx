@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import "./About.scss";
 
+const roundPx = (n) => Math.round(n * 100) / 100;
+
 export default function About() {
   const sectionRef = useRef(null);
   const [sectionTop, setSectionTop] = useState(window.innerHeight);
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
 
   useEffect(() => {
+    let rafId = 0;
+
     const updateProgress = () => {
       if (!sectionRef.current) {
         return;
@@ -17,13 +21,22 @@ export default function About() {
       setViewportHeight(window.innerHeight);
     };
 
+    const schedule = () => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        rafId = 0;
+        updateProgress();
+      });
+    };
+
     updateProgress();
-    window.addEventListener("scroll", updateProgress, { passive: true });
-    window.addEventListener("resize", updateProgress);
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
 
     return () => {
-      window.removeEventListener("scroll", updateProgress);
-      window.removeEventListener("resize", updateProgress);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
 
@@ -48,19 +61,28 @@ export default function About() {
         <h2 className="home-about__title">
           <span
             className="home-about__line home-about__line--left"
-            style={{ transform: `translateX(${-leftDistance}px)`, opacity: leftPhase }}
+            style={{
+              transform: `translate3d(${-roundPx(leftDistance)}px, 0, 0)`,
+              opacity: leftPhase,
+            }}
           >
             Our
           </span>
           <span
             className="home-about__line home-about__line--center"
-            style={{ transform: `translateY(${centerRise}px)`, opacity: centerPhase }}
+            style={{
+              transform: `translate3d(0, ${roundPx(centerRise)}px, 0)`,
+              opacity: centerPhase,
+            }}
           >
             Story
           </span>
           <span
             className="home-about__line home-about__line--right"
-            style={{ transform: `translateX(${rightDistance}px)`, opacity: rightPhase }}
+            style={{
+              transform: `translate3d(${roundPx(rightDistance)}px, 0, 0)`,
+              opacity: rightPhase,
+            }}
           >
             Since 2004
           </span>
@@ -70,7 +92,7 @@ export default function About() {
           className="home-about__description"
           style={{
             opacity: descriptionPhase,
-            transform: `translateY(${35 * (1 - descriptionPhase)}px)`,
+            transform: `translate3d(0, ${roundPx(35 * (1 - descriptionPhase))}px, 0)`,
           }}
         >
           <span className="tertiary-color">

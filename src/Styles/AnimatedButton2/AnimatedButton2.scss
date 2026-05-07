@@ -1,0 +1,97 @@
+@import "../../index.scss";
+
+.btn2 {
+  font-size: 1em;
+  line-height: 1em;
+  letter-spacing: 0.04em;
+  display: inline-block;
+  text-decoration: none;
+
+  &--svg {
+    position: relative;
+    height: 42px;
+    width: 190px;
+    overflow: hidden;
+    border-radius: 21px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      border-radius: inherit;
+      background: $primary;
+      transform-origin: 50% 50%;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    &:hover {
+      &::before {
+        transform: scale(0);
+      }
+
+      .btn2--svg__label {
+        color: $primary;
+      }
+
+      .btn2--svg__border--left,
+      .btn2--svg__border--right {
+        path {
+          stroke-dashoffset: 0;
+          transition-delay: 0.25s;
+          transition-duration: 0.5s;
+          transition-timing-function: ease-in-out;
+          transition-property: stroke-dashoffset;
+        }
+      }
+    }
+
+    &__label {
+      -webkit-font-smoothing: antialiased;
+      font-family: sans-serif;
+      font-weight: bold;
+      text-align: center;
+      color: $secondary;
+      z-index: 3;
+      width: 100%;
+      transition: color 0.5s ease-in-out;
+
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transform-origin: 50% 50%;
+      white-space: nowrap;
+    }
+
+    &__border {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transform-origin: 50% 50%;
+      z-index: 2;
+      pointer-events: none;
+
+      path {
+        stroke-dasharray: 61.8204345703125 61.8204345703125;
+        transition-duration: 0s;
+        transition-timing-function: ease-in-out;
+        transition-property: stroke-dashoffset;
+        transition-delay: 0.5s;
+      }
+
+      &--left {
+        path {
+          stroke-dashoffset: -61.8204345703125;
+        }
+      }
+
+      &--right {
+        path {
+          stroke-dashoffset: 61.8204345703125;
+        }
+      }
+    }
+  }
+}

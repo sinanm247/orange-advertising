@@ -1,0 +1,108 @@
+@import "../../index.scss";
+
+.btn {
+    font-size: 1em;
+    line-height: 1em;
+    letter-spacing: 0.04em;
+    display: inline-block;
+    text-decoration: none;
+  
+    &--svg {
+      position: relative;
+      height: 42px;
+      width: 190px;
+      overflow: hidden;
+      border-radius: 21px;
+  
+      // On hover: shrink the primary circle away, reveal primary label, draw border paths
+      &:hover {
+        .btn--svg__circle {
+          circle {
+            transform: scale(0);
+          }
+        }
+  
+        .btn--svg__label {
+          color: $primary;
+        }
+  
+        .btn--svg__border--left,
+        .btn--svg__border--right {
+          path {
+            stroke-dashoffset: 0;
+            transition-delay: 0.25s;
+            transition-duration: 0.5s;
+            transition-timing-function: ease-in-out;
+            transition-property: stroke-dashoffset;
+          }
+        }
+      }
+  
+      // Label
+      &__label {
+        -webkit-font-smoothing: antialiased;
+        font-family: sans-serif;
+        font-weight: bold;
+        text-align: center;
+        color: $secondary;
+        z-index: 3;
+        width: 100%;
+        transition: color 0.5s ease-in-out;
+  
+        // Centred absolutely inside the button
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transform-origin: 50% 50%;
+        white-space: nowrap;
+      }
+  
+      // Primary filled circle (the "pill" background)
+      &__circle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transform-origin: 50% 50%;
+  
+        circle {
+          transition: transform 0.5s ease-in-out;
+          transform: scale(1.1);
+          transform-origin: 50% 50%;
+        }
+      }
+  
+      // Both border SVGs share base positioning
+      &__border {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transform-origin: 50% 50%;
+  
+        // Default (non-hover) state — paths are hidden via dash offset
+        path {
+          stroke-dasharray: 61.8204345703125 61.8204345703125;
+          transition-duration: 0s;
+          transition-timing-function: ease-in-out;
+          transition-property: stroke-dashoffset;
+          transition-delay: 0.5s;
+        }
+  
+        // Left arc starts hidden to the left
+        &--left {
+          path {
+            stroke-dashoffset: -61.8204345703125;
+          }
+        }
+  
+        // Right arc starts hidden to the right
+        &--right {
+          path {
+            stroke-dashoffset: 61.8204345703125;
+          }
+        }
+      }
+    }
+  }
