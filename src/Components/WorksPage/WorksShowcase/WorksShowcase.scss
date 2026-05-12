@@ -48,6 +48,11 @@
   }
 }
 
+.works-showcase__card picture {
+  display: block;
+  width: 100%;
+}
+
 .works-showcase__card:nth-child(4n + 1),
 .works-showcase__card:nth-child(4n + 4) {
   @media (min-width: 1025px) {

@@ -12,7 +12,14 @@ export default function WorksShowcase() {
       <div className="works-showcase__grid">
         {works.map((work) => (
           <article className="works-showcase__card" key={work.id}>
-            <img src={work.image} alt={work.title} className="works-showcase__image" />
+            {work.imageDesktop ? (
+              <picture>
+                <source media="(min-width: 1025px)" srcSet={work.imageDesktop} />
+                <img src={work.image} alt={work.title} className="works-showcase__image" />
+              </picture>
+            ) : (
+              <img src={work.image} alt={work.title} className="works-showcase__image" />
+            )}
             <div className="works-showcase__meta">
               <span>({work.id})</span>
               <h3>{work.title}</h3>
