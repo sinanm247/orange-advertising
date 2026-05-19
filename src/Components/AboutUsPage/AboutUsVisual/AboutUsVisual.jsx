@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import visualBg from "../../../assets/Banners/Banner-2.webp";
+import visualBg from "../../../assets/Works/Image-10.webp";
 import "./AboutUsVisual.scss";
 
 export default function AboutUsVisual() {
@@ -118,7 +118,7 @@ export default function AboutUsVisual() {
     <section
       className="about-us-visual section-container"
       data-bg-tone="0"
-      data-bg-offset="0.42"
+      data-bg-offset="0.45"
       data-bg-delay-blend="0.3"
       ref={sectionRef}
       style={{ "--about-visual-bg": `url(${visualBg})` }}

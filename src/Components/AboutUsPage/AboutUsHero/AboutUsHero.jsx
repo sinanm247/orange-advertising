@@ -2,7 +2,7 @@ import "./AboutUsHero.scss";
 
 export default function AboutUsHero() {
   return (
-    <section className="about-us-hero" data-bg-tone="1" data-bg-offset="0.58">
+    <section className="about-us-hero" data-bg-tone="1" data-bg-offset="0.45">
       <div className="about-us-hero__marquee" aria-hidden="true">
         <div className="about-us-hero__marquee-track">
           <span>Dubai Since 2004</span>

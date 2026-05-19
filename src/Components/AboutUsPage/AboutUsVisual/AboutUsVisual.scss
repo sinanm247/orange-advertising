@@ -86,11 +86,11 @@
 }
 
 .about-us-visual__label--left {
-  left: clamp(20px, 8vw, 120px);
+  left: clamp(170px, 10vw, 180px);
 }
 
 .about-us-visual__label--right {
-  right: clamp(20px, 8vw, 120px);
+  right: clamp(170px, 10vw, 180px);
   text-align: right;
 }
 
@@ -106,10 +106,9 @@
 
 .about-us-visual__mission-vision-card h3 {
   margin: 0 0 clamp(8px, 1vw, 12px);
-  text-transform: uppercase;
-  font-size: clamp(13px, 1.05vw, 16px);
-  letter-spacing: 0.06em;
-  color: rgba($quaternary, 0.95);
+  font-family: "iBrand", sans-serif;
+  font-size: clamp(20px, 1.7vw, 30px);
+  color: rgba($primary, 0.98);
   font-weight: 600;
 }
 
