@@ -278,6 +278,10 @@
     margin-right: 0;
   }
 
+  .site-header.is-menu-open .site-header__brand {
+    z-index: 340;
+  }
+
   .site-header.is-menu-open .site-header__brand--text {
     opacity: 0 !important;
   }
