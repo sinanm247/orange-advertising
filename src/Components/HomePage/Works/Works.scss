@@ -67,8 +67,8 @@
 .home-works__scroll-hint {
   position: fixed;
   left: 50%;
-  bottom: 28px;
-  z-index: 10;
+  bottom: max(28px, env(safe-area-inset-bottom, 0px) + 16px);
+  z-index: 100;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -79,6 +79,12 @@
   transition: opacity 0.35s ease, visibility 0.35s ease;
   pointer-events: none;
   color: $secondary;
+  text-shadow: 0 1px 12px rgba($tertiary, 0.55);
+
+  &--visible {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
 .home-works__scroll-hint-text {

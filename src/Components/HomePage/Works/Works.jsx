@@ -1,4 +1,5 @@
 import { useLayoutEffect, useMemo, useRef } from "react";
+import { createPortal } from "react-dom";
 import "./Works.scss";
 import works from "../../../data/worksData";
 
@@ -37,19 +38,17 @@ export default function Works() {
       const scrollHint = scrollHintRef.current;
       const sticky = stickyRef.current;
       if (scrollHint && sticky) {
-        const worksEl = section.closest(".home-works");
-        const worksRect = worksEl?.getBoundingClientRect();
-        const stickyTop = window.matchMedia("(min-width: 1025px)").matches ? 92 : 0;
         const stickyRect = sticky.getBoundingClientRect();
-        const inWorks =
-          worksRect && worksRect.top < window.innerHeight && worksRect.bottom > 0;
-        const isStuck =
-          stickyRect.top <= stickyTop + 6 && rect.bottom > stickyTop + 48;
-        const show = inWorks && progress < 0.95;
-
-        scrollHint.style.position = isStuck ? "absolute" : "fixed";
-        scrollHint.style.opacity = show ? "1" : "0";
-        scrollHint.style.visibility = show ? "visible" : "hidden";
+        const galleryApproaching =
+          rect.top > 0 && rect.top < window.innerHeight * 1.25;
+        const galleryPinned =
+          stickyRect.bottom > 48 && stickyRect.top < window.innerHeight;
+        const inScrub =
+          rect.top <= 0 && rect.bottom >= window.innerHeight * 0.25;
+        const show =
+          progress < 0.95 &&
+          (galleryApproaching || galleryPinned || inScrub);
+        scrollHint.classList.toggle("home-works__scroll-hint--visible", show);
       }
     };
 
@@ -87,14 +86,6 @@ export default function Works() {
 
       <div className="home-works__gallery-section" ref={gallerySectionRef}>
         <div className="home-works__gallery-sticky" ref={stickyRef}>
-          <div
-            className="home-works__scroll-hint"
-            ref={scrollHintRef}
-            aria-hidden="true"
-          >
-            <span className="home-works__scroll-hint-text">Scroll down</span>
-            <span className="home-works__scroll-hint-arrow" />
-          </div>
           <div className="home-works__gallery" ref={viewportRef}>
             <div className="home-works__track" ref={trackRef}>
               {featuredWorks.map((work) => (
@@ -111,6 +102,18 @@ export default function Works() {
           </div>
         </div>
       </div>
+
+      {createPortal(
+        <div
+          className="home-works__scroll-hint"
+          ref={scrollHintRef}
+          aria-hidden="true"
+        >
+          <span className="home-works__scroll-hint-text">Scroll down</span>
+          <span className="home-works__scroll-hint-arrow" />
+        </div>,
+        document.body
+      )}
     </section>
   );
 }
