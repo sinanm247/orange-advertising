@@ -4,8 +4,10 @@ import works from "../../../data/worksData";
 
 export default function Works() {
   const gallerySectionRef = useRef(null);
+  const stickyRef = useRef(null);
   const viewportRef = useRef(null);
   const trackRef = useRef(null);
+  const scrollHintRef = useRef(null);
   const maxTranslateRef = useRef(0);
 
   const featuredWorks = useMemo(() => works.filter((work) => work.featured), []);
@@ -31,6 +33,24 @@ export default function Works() {
 
       const tx = -maxTranslateRef.current * progress;
       track.style.transform = `translate3d(${tx}px, 0, 0)`;
+
+      const scrollHint = scrollHintRef.current;
+      const sticky = stickyRef.current;
+      if (scrollHint && sticky) {
+        const worksEl = section.closest(".home-works");
+        const worksRect = worksEl?.getBoundingClientRect();
+        const stickyTop = window.matchMedia("(min-width: 1025px)").matches ? 92 : 0;
+        const stickyRect = sticky.getBoundingClientRect();
+        const inWorks =
+          worksRect && worksRect.top < window.innerHeight && worksRect.bottom > 0;
+        const isStuck =
+          stickyRect.top <= stickyTop + 6 && rect.bottom > stickyTop + 48;
+        const show = inWorks && progress < 0.95;
+
+        scrollHint.style.position = isStuck ? "absolute" : "fixed";
+        scrollHint.style.opacity = show ? "1" : "0";
+        scrollHint.style.visibility = show ? "visible" : "hidden";
+      }
     };
 
     const schedule = () => {
@@ -66,7 +86,15 @@ export default function Works() {
       </div>
 
       <div className="home-works__gallery-section" ref={gallerySectionRef}>
-        <div className="home-works__gallery-sticky">
+        <div className="home-works__gallery-sticky" ref={stickyRef}>
+          <div
+            className="home-works__scroll-hint"
+            ref={scrollHintRef}
+            aria-hidden="true"
+          >
+            <span className="home-works__scroll-hint-text">Scroll down</span>
+            <span className="home-works__scroll-hint-arrow" />
+          </div>
           <div className="home-works__gallery" ref={viewportRef}>
             <div className="home-works__track" ref={trackRef}>
               {featuredWorks.map((work) => (
