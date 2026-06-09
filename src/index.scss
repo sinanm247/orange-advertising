@@ -37,6 +37,16 @@ $quaternary: #ffd773; // Yellow
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;

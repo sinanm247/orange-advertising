@@ -228,7 +228,7 @@ export default function HomeHero() {
           <div className="home-hero__content" />
 
           <AnimatedButton
-            href="#project"
+            href="#contact"
             label="Start a Project"
             className="home-hero__cta"
             style={motionStyles.cta}
