@@ -13,7 +13,7 @@ export default function AboutUsPage() {
           <AboutUsHero />
           <AboutUsVisual />
           <Clients />
-          <ContactUs />
+          <ContactUs enableBgTone={false} />
         </section>
       </Helmet>
     </Fragment>

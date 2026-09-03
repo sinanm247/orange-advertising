@@ -124,11 +124,17 @@ function shellBackgroundRgbFromToneWeight(nonHomePrimaryWeight, viewport) {
   const stableViewportHeight = viewport.height || window.innerHeight;
   const footerNode = document.getElementById("footer");
   const footerRect = footerNode?.getBoundingClientRect();
+  const contactNode = document.getElementById("contact");
+  const contactRect = contactNode?.getBoundingClientRect();
+  // Keep ContactUs on the current section tone until it mostly leaves the viewport.
+  const holdContactTone =
+    contactRect != null && contactRect.bottom > stableViewportHeight * 0.45;
   const footerBgStart = stableViewportHeight * 0.72;
   const footerBgEnd = stableViewportHeight * 0.2;
-  const footerBgPhase = footerRect
+  const rawFooterBgPhase = footerRect
     ? Math.min(Math.max((footerBgStart - footerRect.top) / (footerBgStart - footerBgEnd), 0), 1)
     : 0;
+  const footerBgPhase = holdContactTone ? 0 : rawFooterBgPhase;
   const anchoredPrimaryWeight = Math.min(Math.max(nonHomePrimaryWeight, 0), 1);
   const primaryWeight = anchoredPrimaryWeight * (1 - footerBgPhase);
   const mixChannel = (from, to, phase) => Math.round(from + (to - from) * phase);
@@ -531,11 +537,17 @@ export default function App() {
     const stableViewportHeight = viewport.height || window.innerHeight;
     const footerNode = document.getElementById("footer");
     const footerRect = footerNode?.getBoundingClientRect();
+    const contactNode = document.getElementById("contact");
+    const contactRect = contactNode?.getBoundingClientRect();
+    // Keep ContactUs on the current section tone until it mostly leaves the viewport.
+    const holdContactTone =
+      contactRect != null && contactRect.bottom > stableViewportHeight * 0.45;
     const footerBgStart = stableViewportHeight * 0.72;
     const footerBgEnd = stableViewportHeight * 0.2;
-    const footerBgPhase = footerRect
+    const rawFooterBgPhase = footerRect
       ? Math.min(Math.max((footerBgStart - footerRect.top) / (footerBgStart - footerBgEnd), 0), 1)
       : 0;
+    const footerBgPhase = holdContactTone ? 0 : rawFooterBgPhase;
     const footerMotionStart =
       stableViewportHeight * (viewport.width <= 460 ? 0.22 : 0.52);
     const footerMotionEnd =

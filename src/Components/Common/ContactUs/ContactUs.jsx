@@ -1,8 +1,14 @@
 import "./ContactUs.scss";
 
-export default function ContactUs() {
+export default function ContactUs({ enableBgTone = true } = {}) {
   return (
-    <section className="contact-us-section" id="contact" data-bg-tone="1" data-bg-offset="0.45">
+    <section
+      className="contact-us-section"
+      id="contact"
+      {...(enableBgTone
+        ? { "data-bg-tone": "1", "data-bg-offset": "0.45" }
+        : {})}
+    >
       <div className="contact-us-section__inner">
         <div className="contact-us-section__left">
           <h2>

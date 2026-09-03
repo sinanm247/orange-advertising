@@ -1,9 +1,21 @@
 // import { useEffect, useMemo, useRef, useState } from "react";
 // import visualBg from "../../../assets/Works/Image-10.webp";
-import works from "../../../data/worksData";
+import mosaicImg1 from "../../../assets/Works/Image-15.webp";
+import mosaicImg2 from "../../../assets/Works/Image-9.webp";
+import mosaicImg3 from "../../../assets/Works/Image-2.webp";
+import mosaicImg4 from "../../../assets/Works/Image-4.webp";
+import mosaicImg5 from "../../../assets/Works/Image-10.webp";
+import mosaicImg6 from "../../../assets/Works/Image-7.webp";
 import "./AboutUsVisual.scss";
 
-const mosaicImages = works.filter((work) => work.featured).slice(0, 6);
+const mosaicImages = [
+  mosaicImg1,
+  mosaicImg2,
+  mosaicImg3,
+  mosaicImg4,
+  mosaicImg5,
+  mosaicImg6,
+];
 
 export default function AboutUsVisual() {
   // const sectionRef = useRef(null);
@@ -83,12 +95,12 @@ export default function AboutUsVisual() {
         </div>
 
         <div className="about-us-visual__mosaic-grid">
-          {mosaicImages.map((work, index) => (
+          {mosaicImages.map((image, index) => (
             <div
               className={`about-us-visual__mosaic-cell about-us-visual__mosaic-cell--${index + 1}`}
-              key={work.id}
+              key={`mosaic-${index + 1}`}
             >
-              <img src={work.image} alt="" loading="lazy" />
+              <img src={image} alt="" loading="lazy" />
             </div>
           ))}
         </div>
