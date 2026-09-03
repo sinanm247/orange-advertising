@@ -4,80 +4,78 @@ import "./Services.scss";
 const serviceCards = [
   {
     id: "01",
-    title: "Advertisement",
-    description:
-      "Large-format outdoor visibility solutions built for high-reach campaigns.",
+    title: "Printing",
     items: [
-      "Boards",
-      "Hoardings",
-      "Outdoor Campaign Displays",
-      "Project Coordination",
+      "Flex Banners",
+      "Danglers",
+      "Vinyl Branding",
+      "Flags",
+      "3D",
+      "Floor Graphics",
+      "Backdrops",
+      "Wall Signs",
+      "Displays",
+      "POS Materials",
+      "Outdoor",
+      "Window Branding",
     ],
   },
   {
     id: "02",
-    title: "Signage",
-    description:
-      "Custom indoor and outdoor sign systems designed for clarity and brand presence.",
+    title: "Manufacturing",
     items: [
-      "Indoor Signage",
-      "Outdoor Signage",
-      "LED Installation",
-      "Steel Fabrication Support",
-    ],
-  },
-  {
-    id: "03",
-    title: "Floor Graphics",
-    description:
-      "Durable floor branding and directional graphics for retail and event spaces.",
-    items: [
-      "Retail Wayfinding",
-      "Promotional Floor Decals",
-      "Anti-Slip Media Options",
-      "Installation-ready Outputs",
-    ],
-  },
-  {
-    id: "04",
-    title: "Wall Signs",
-    description:
-      "High-impact wall communication systems for interior and exterior environments.",
-    items: [
-      "Brand Walls",
-      "Office Sign Panels",
-      "Vinyl Wall Branding",
-      "Backlit Wall Displays",
-    ],
-  },
-  {
-    id: "05",
-    title: "Structural Design",
-    description:
-      "End-to-end structural concepts and fabrication support for display installations.",
-    items: [
-      "Display Structures",
-      "Media Mounting Solutions",
-      "Steel and Frame Planning",
-      "Execution Supervision",
-    ],
-  },
-  {
-    id: "06",
-    title: "POS Materials",
-    description:
-      "Point-of-sale display materials crafted to improve in-store visibility and conversion.",
-    items: [
-      "Countertop Displays",
-      "Shelf Branding",
-      "Danglers and Cutouts",
-      "In-Store Promotional Kits",
+      "Signage",
+      "Advertisement Boards",
+      "Structural Design",
+      "Indoor & Outdoor Steel Manufacturing",
+      "LED Installation and Project Management",
     ],
   },
 ];
 
+const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+const getCardStackProgress = (index, card, nextCard) => {
+  if (!card) {
+    return 0;
+  }
+
+  const styles = window.getComputedStyle(card);
+  const stickyTop = parseFloat(styles.getPropertyValue("--sticky-top")) || 0;
+  const stackGap = parseFloat(styles.getPropertyValue("--stack-gap")) || 0;
+  const stackLine = stickyTop + index * stackGap;
+  const cardTop = card.getBoundingClientRect().top;
+
+  if (cardTop > stackLine + 4) {
+    return 0;
+  }
+
+  if (!nextCard) {
+    return 0;
+  }
+
+  const nextTop = nextCard.getBoundingClientRect().top;
+  const nextStackLine = stickyTop + (index + 1) * stackGap;
+
+  if (nextTop <= nextStackLine + 2) {
+    return 1;
+  }
+
+  const transitionStart = nextStackLine + stackGap * 1.35;
+  const transitionEnd = nextStackLine;
+
+  if (nextTop >= transitionStart) {
+    return 0;
+  }
+
+  return clamp(1 - (nextTop - transitionEnd) / (transitionStart - transitionEnd), 0, 1);
+};
+
 export default function Services() {
   const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const [cardStackProgress, setCardStackProgress] = useState(() =>
+    serviceCards.map(() => 0)
+  );
   const cardRefs = useRef([]);
   const stackRef = useRef(null);
   const isSelectingRef = useRef(false);
@@ -86,27 +84,35 @@ export default function Services() {
   useEffect(() => {
     const updateActiveCardFromScroll = () => {
       let nextActive = 0;
-
-      serviceCards.forEach((_, index) => {
+      const nextProgress = serviceCards.map((_, index) => {
         const card = cardRefs.current[index];
-        if (!card) {
-          return;
+        const nextCard = cardRefs.current[index + 1];
+
+        if (card) {
+          const styles = window.getComputedStyle(card);
+          const stickyTop = parseFloat(styles.getPropertyValue("--sticky-top")) || 0;
+          const stackGap = parseFloat(styles.getPropertyValue("--stack-gap")) || 0;
+          const threshold = stickyTop + index * stackGap;
+          const top = card.getBoundingClientRect().top;
+
+          if (top <= threshold + 2) {
+            nextActive = index;
+          }
         }
 
-        const styles = window.getComputedStyle(card);
-        const stickyTop = parseFloat(styles.getPropertyValue("--sticky-top")) || 0;
-        const stackGap = parseFloat(styles.getPropertyValue("--stack-gap")) || 0;
-        const threshold = stickyTop + index * stackGap;
-        const top = card.getBoundingClientRect().top;
-
-        if (top <= threshold + 2) {
-          nextActive = index;
-        }
+        return getCardStackProgress(index, card, nextCard);
       });
 
       if (!isSelectingRef.current) {
         setActiveCardIndex((prev) => (prev === nextActive ? prev : nextActive));
       }
+
+      setCardStackProgress((prev) => {
+        const hasChanged = prev.some(
+          (value, index) => Math.abs(value - nextProgress[index]) > 0.005
+        );
+        return hasChanged ? nextProgress : prev;
+      });
     };
 
     updateActiveCardFromScroll();
@@ -166,8 +172,8 @@ export default function Services() {
           <h2 className="home-services__title tertiary-color">Undying Bonds</h2>
         </div>
         <p className="home-services__description">
-          Full-spectrum print and fabrication support from file preparation to
-          final installation and delivery.
+          Our comprehensive product range, which continues to grow through
+          research and development initiatives.
         </p>
       </div>
 
@@ -176,7 +182,10 @@ export default function Services() {
           <article
             className={`home-services__card ${index === activeCardIndex ? "is-active" : ""}`}
             key={card.id}
-            style={{ "--stack-index": index }}
+            style={{
+              "--stack-index": index,
+              "--stack-progress": cardStackProgress[index],
+            }}
             ref={(el) => {
               cardRefs.current[index] = el;
             }}
@@ -190,9 +199,10 @@ export default function Services() {
               }
             }}
           >
-            <span className="home-services__card-id">({card.id})</span>
-            <h3>{card.title}</h3>
-            <p>{card.description}</p>
+            <div className="home-services__card-header">
+              <span className="home-services__card-id">({card.id})</span>
+              <h3 className="home-services__card-title">{card.title}</h3>
+            </div>
             <ul>
               {card.items.map((item) => (
                 <li className="tertiary-color" key={item}>{item}</li>

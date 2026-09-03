@@ -28,6 +28,17 @@ export default function ContactUs() {
             </label>
           </div>
 
+          <div className="contact-us-section__row">
+            <label className="contact-us-section__field">
+              <span>(Phone Number)</span>
+              <input type="tel" placeholder="Phone Number" />
+            </label>
+            <label className="contact-us-section__field">
+              <span>(Company)</span>
+              <input type="text" placeholder="Company Name" />
+            </label>
+          </div>
+
           <label className="contact-us-section__field contact-us-section__field--full">
             <span>(Message)</span>
             <textarea placeholder="A little something about your project..." />

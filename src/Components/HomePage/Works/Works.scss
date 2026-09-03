@@ -185,15 +185,34 @@
 .home-works__meta h3 {
   margin: 8px 0 0;
   text-transform: uppercase;
-  font-size: clamp(25px, 5vw, 50px);
-  line-height: 0.95;
+  font-size: clamp(18px, 2.4vw, 30px);
+  line-height: 1;
   border-bottom: 1px solid rgba($secondary, 0.45);
   padding-bottom: 8px;
 }
 
-.home-works__meta p {
-  margin: 8px 0 0;
-  font-size: clamp(14px, 1.6vw, 22px);
+.home-works__meta-row {
+  margin-top: 8px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.home-works__client,
+.home-works__service {
+  margin: 0;
+  font-size: clamp(12px, 1.2vw, 16px);
   text-transform: uppercase;
   opacity: 0.95;
+  line-height: 1.25;
+}
+
+.home-works__client {
+  text-align: left;
+}
+
+.home-works__service {
+  text-align: right;
+  max-width: 55%;
 }

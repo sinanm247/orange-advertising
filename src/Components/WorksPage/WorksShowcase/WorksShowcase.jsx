@@ -23,7 +23,10 @@ export default function WorksShowcase() {
             <div className="works-showcase__meta">
               <span>({work.id})</span>
               <h3>{work.title}</h3>
-              <p>{work.subtitle}</p>
+              <div className="works-showcase__meta-row">
+                <p className="works-showcase__client">{work.client}</p>
+                <p className="works-showcase__service">{work.service}</p>
+              </div>
             </div>
           </article>
         ))}

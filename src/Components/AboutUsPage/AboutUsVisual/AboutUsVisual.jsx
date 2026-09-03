@@ -1,128 +1,29 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import visualBg from "../../../assets/Works/Image-10.webp";
+// import { useEffect, useMemo, useRef, useState } from "react";
+// import visualBg from "../../../assets/Works/Image-10.webp";
+import works from "../../../data/worksData";
 import "./AboutUsVisual.scss";
 
+const mosaicImages = works.filter((work) => work.featured).slice(0, 6);
+
 export default function AboutUsVisual() {
-  const sectionRef = useRef(null);
-  const orbitRef = useRef(null);
-  const circleRefs = useRef([]);
-  const windowRefs = useRef([]);
-  const [phase, setPhase] = useState(0);
-  const [orbitRadius, setOrbitRadius] = useState(26);
-  const [isMobileVisual, setIsMobileVisual] = useState(window.innerWidth <= 900);
+  // const sectionRef = useRef(null);
+  // const orbitRef = useRef(null);
+  // const circleRefs = useRef([]);
+  // const windowRefs = useRef([]);
+  // const [phase, setPhase] = useState(0);
+  // const [orbitRadius, setOrbitRadius] = useState(26);
+  // const [isMobileVisual, setIsMobileVisual] = useState(window.innerWidth <= 900);
 
-  useEffect(() => {
-    const updatePhase = () => {
-      if (!sectionRef.current) {
-        return;
-      }
-
-      const rect = sectionRef.current.getBoundingClientRect();
-      const travel = window.innerHeight + rect.height;
-      const next = Math.min(Math.max((window.innerHeight - rect.top) / Math.max(travel, 1), 0), 1);
-      setPhase(next);
-    };
-
-    updatePhase();
-    window.addEventListener("scroll", updatePhase, { passive: true });
-    window.addEventListener("resize", updatePhase);
-
-    return () => {
-      window.removeEventListener("scroll", updatePhase);
-      window.removeEventListener("resize", updatePhase);
-    };
-  }, []);
-
-  useEffect(() => {
-    const updateViewportMode = () => {
-      setIsMobileVisual(window.innerWidth <= 900);
-    };
-    updateViewportMode();
-    window.addEventListener("resize", updateViewportMode);
-    return () => window.removeEventListener("resize", updateViewportMode);
-  }, []);
-
-  useEffect(() => {
-    if (!sectionRef.current) {
-      return;
-    }
-
-    const sectionRect = sectionRef.current.getBoundingClientRect();
-
-    windowRefs.current.forEach((windowEl, index) => {
-      const circleEl = circleRefs.current[index];
-      if (!windowEl || !circleEl) {
-        return;
-      }
-
-      const circleRect = circleEl.getBoundingClientRect();
-      const offsetX = circleRect.left - sectionRect.left;
-      const offsetY = circleRect.top - sectionRect.top;
-      const bgScale = isMobileVisual ? 1 : 2;
-      const bgWidth = sectionRect.width * bgScale;
-      const bgHeight = sectionRect.height * bgScale;
-      const shiftX = (bgWidth - sectionRect.width) / 2;
-      const shiftY = (bgHeight - sectionRect.height) / 2;
-
-      windowEl.style.backgroundSize = `${bgWidth}px ${bgHeight}px`;
-      windowEl.style.backgroundPosition = `${-offsetX - shiftX}px ${-offsetY - shiftY}px`;
-    });
-  }, [isMobileVisual, phase]);
-
-  useEffect(() => {
-    const updateOrbitRadius = () => {
-      const orbitEl = orbitRef.current;
-      const circleEl = circleRefs.current[0];
-      if (!orbitEl || !circleEl) {
-        return;
-      }
-
-      const orbitRect = orbitEl.getBoundingClientRect();
-      const circleRect = circleEl.getBoundingClientRect();
-      const nextRadius = (circleRect.width / 2 / Math.max(orbitRect.width, 1)) * 100;
-      const clamped = Math.min(Math.max(nextRadius, 8), 45);
-      setOrbitRadius(clamped);
-    };
-
-    updateOrbitRadius();
-    window.addEventListener("resize", updateOrbitRadius);
-
-    return () => {
-      window.removeEventListener("resize", updateOrbitRadius);
-    };
-  }, []);
-
-  const motion = useMemo(() => {
-    const eased = 1 - (1 - phase) ** 1.6;
-    if (isMobileVisual) {
-      return {
-        topCircle: {},
-        bottomCircle: {},
-      };
-    }
-
-    const angle = 140 * eased;
-    const radius = orbitRadius;
-    const rad = (angle * Math.PI) / 180;
-    const topX = 50 + radius * Math.sin(rad);
-    const topY = 50 - radius * Math.cos(rad);
-    const bottomX = 50 + radius * Math.sin(rad + Math.PI);
-    const bottomY = 50 - radius * Math.cos(rad + Math.PI);
-    return {
-      topCircle: { left: `${topX}%`, top: `${topY}%` },
-      bottomCircle: { left: `${bottomX}%`, top: `${bottomY}%` },
-    };
-  }, [isMobileVisual, phase, orbitRadius]);
+  // ... previous orbit / scroll visual logic kept above in git history / comments in prior version ...
 
   return (
     <section
       className="about-us-visual section-container"
       data-bg-tone="0"
       data-bg-offset="0.45"
-      data-bg-delay-blend="0.3"
-      ref={sectionRef}
-      style={{ "--about-visual-bg": `url(${visualBg})` }}
+      data-bg-delay-blend="0.4"
     >
+      {/* Previous orbit stage — kept for reference
       <div className="about-us-visual__stage">
         <div className="about-us-visual__cover" aria-hidden="true" />
 
@@ -167,6 +68,29 @@ export default function AboutUsVisual() {
               }}
             />
           </div>
+        </div>
+      </div>
+      */}
+
+      <div className="about-us-visual__mosaic" aria-hidden="true">
+        <div className="about-us-visual__mosaic-label about-us-visual__mosaic-label--left">
+          <span>Good</span>
+          <p>Brands</p>
+        </div>
+        <div className="about-us-visual__mosaic-label about-us-visual__mosaic-label--right">
+          <span>Good</span>
+          <p>People</p>
+        </div>
+
+        <div className="about-us-visual__mosaic-grid">
+          {mosaicImages.map((work, index) => (
+            <div
+              className={`about-us-visual__mosaic-cell about-us-visual__mosaic-cell--${index + 1}`}
+              key={work.id}
+            >
+              <img src={work.image} alt="" loading="lazy" />
+            </div>
+          ))}
         </div>
       </div>
 

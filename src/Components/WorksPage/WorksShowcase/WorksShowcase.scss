@@ -86,16 +86,35 @@
 .works-showcase__meta h3 {
   margin: 8px 0 0;
   text-transform: uppercase;
-  font-size: clamp(26px, 4vw, 54px);
-  line-height: 0.92;
+  font-size: clamp(18px, 2.2vw, 28px);
+  line-height: 1;
   color: rgba($secondary, 0.96);
   border-bottom: 1px solid rgba($secondary, 0.42);
   padding-bottom: 8px;
 }
 
-.works-showcase__meta p {
-  margin: 8px 0 0;
+.works-showcase__meta-row {
+  margin-top: 8px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.works-showcase__client,
+.works-showcase__service {
+  margin: 0;
   text-transform: uppercase;
-  font-size: clamp(14px, 1.3vw, 24px);
+  font-size: clamp(12px, 1.15vw, 16px);
   color: rgba($secondary, 0.92);
+  line-height: 1.25;
+}
+
+.works-showcase__client {
+  text-align: left;
+}
+
+.works-showcase__service {
+  text-align: right;
+  max-width: 55%;
 }

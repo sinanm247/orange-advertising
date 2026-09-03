@@ -200,24 +200,41 @@ function computePrimaryWeightFromAnchors(scrollY, viewportHeight) {
     const next = anchors[index + 1];
     const lo = Math.min(current.top, next.top);
     const hi = Math.max(current.top, next.top);
-    if (probeY < lo || probeY > hi) {
-      continue;
-    }
+    const hasDelay = next.nodeEl != null && next.delayBlendFrac != null;
 
-    if (next.nodeEl != null && next.delayBlendFrac != null) {
+    if (hasDelay) {
       const r = next.nodeEl.getBoundingClientRect();
       const vh = stableViewportHeight;
       const visible = Math.max(0, Math.min(r.bottom, vh) - Math.max(r.top, 0));
-      const ratio = r.height > 0 ? visible / r.height : 0;
+      // Use viewport height as the cap so tall sections can still reach a full fade
+      // once they fill the screen (matches Visual → Clients feel on desktop).
+      const ratioDenom = Math.min(Math.max(r.height, 1), vh);
+      const ratio = visible / ratioDenom;
+
+      // Fade finished and scroll has moved on — later anchors take over.
+      if (probeY > hi && ratio >= 1) {
+        continue;
+      }
+      if (probeY < lo) {
+        continue;
+      }
+      if (probeY > hi && ratio <= 0) {
+        continue;
+      }
+
       if (ratio < next.delayBlendFrac) {
         return current.tone;
       }
+
       const span = Math.max(1 - next.delayBlendFrac, 1e-4);
       const ratioT = Math.min(Math.max((ratio - next.delayBlendFrac) / span, 0), 1);
-      const segSpan = Math.max(hi - lo, 1);
-      const scrollT = Math.min(Math.max((probeY - lo) / segSpan, 0), 1);
-      const phase = smoothstep01(ratioT) * smoothstep01(scrollT);
+      // Visibility-only phase: avoids tall previous sections (About hero) zeroing out the fade.
+      const phase = smoothstep01(ratioT);
       return current.tone + (next.tone - current.tone) * phase;
+    }
+
+    if (probeY < lo || probeY > hi) {
+      continue;
     }
 
     const toneFrom = current.top <= next.top ? current.tone : next.tone;

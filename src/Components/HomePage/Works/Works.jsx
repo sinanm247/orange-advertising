@@ -94,7 +94,10 @@ export default function Works() {
                   <div className="home-works__meta">
                     <span className="tertiary-color">({work.id})</span>
                     <h3 className="quaternary-color">{work.title}</h3>
-                    <p>{work.subtitle}</p>
+                    <div className="home-works__meta-row">
+                      <p className="home-works__client">{work.client}</p>
+                      <p className="home-works__service">{work.service}</p>
+                    </div>
                   </div>
                 </article>
               ))}
