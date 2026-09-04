@@ -96,15 +96,15 @@ export default function About() {
           }}
         >
           <span className="tertiary-color">
-          Orange Advertising opened its Dubai office in 2004. Specialized in
-          large format digital printing, we provide a wide range of indoor and
-          outdoor printing solutions for your business by using a blend of the
-          most sophisticated pre-press, printing, and finishing equipment.
+            Two decades of large format printing, born in Dubai. From flex banners to full building
+            wraps, we combine advanced pre-press, printing, and finishing equipment to deliver work
+            that holds up, on the wall, on the road, and on the skyline.
           </span>
           <br />
           <br />
-          Our commitment: To deliver premium quality printing and installation
-          and to maintain strong customer service relations.
+          <span className="primary-color">
+            Our commitment: To deliver premium quality printing and installation and to maintain strong customer service relations.
+          </span>
         </p>
       </div>
     </section>

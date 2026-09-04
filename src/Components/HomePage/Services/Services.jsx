@@ -27,8 +27,7 @@ const serviceCards = [
       "Signage",
       "Advertisement Boards",
       "Structural Design",
-      "Indoor & Outdoor Steel Manufacturing",
-      "LED Installation and Project Management",
+      "Indoor & Outdoor LED Installation and Project Management",
     ],
   },
 ];

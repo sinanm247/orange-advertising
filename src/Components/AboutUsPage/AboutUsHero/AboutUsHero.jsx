@@ -21,31 +21,24 @@ export default function AboutUsHero() {
       <div className="about-us-hero__content-block section-container">
         <section className="about-us-intro">
           <h2>About Orange Advertising</h2>
-          <p>
-            A Dubai-born large format specialist, turning brand ideas into high-impact indoor and
-            outdoor experiences across the UAE.
-          </p>
-          <p>
-            Since 2004, we&apos;ve focused on one thing: printing and producing visuals that hold
-            their own against the city skyline.
-          </p>
+          <p>We turn bold ideas into large format reality.</p>
         </section>
 
         <section className="about-us-story">
           <p>
-            From flex banners, 3D hoardings and rooftop installations to mall interiors, flags,
-            vehicle branding and full façade wraps, our work is built to be seen, remembered, and
-            trusted.
+            Since 2004, Orange Advertising has produced indoor and outdoor visuals across the UAE -
+            from flex banners and 3D hoardings to mall interiors, rooftop installations, vehicle
+            branding, and full façade wraps.
           </p>
           <p>
-            Powered by advanced pre-press, colour-managed workflows and state-of-the-art printing
-            and finishing equipment, we manage every stage in-house—file creation, colour
-            manipulation, mounting, fabrication, packing and distribution.
+            Every stage happens in-house - pre-press, colour management, printing, mounting,
+            fabrication, packing, and distribution - giving our clients one point of accountability
+            from file to finish.
           </p>
           <p>
-            That control has made Orange Advertising a go-to production partner for developers,
-            banks, retailers, automotive brands, telcos, malls and government entities who
-            can&apos;t afford to compromise on quality or deadlines.
+            It&apos;s what makes us a go-to production partner for developers, banks, retailers,
+            automotive brands, telcos, malls, and government entities who can&apos;t afford to
+            compromise on quality or deadlines.
           </p>
         </section>
 
@@ -53,23 +46,22 @@ export default function AboutUsHero() {
           <h3 id="about-us-values-heading">What we stand for</h3>
           <ul>
             <li>
-              Committed to premium printing, precise colour and clean finishing on every job.
+              <span>Precision Printing</span> - Premium quality, accurate colour and clean finishing
             </li>
             <li>
-              We treat timelines as promises, planning production and installation to deliver on
-              schedule.
+              <span>On-Time Delivery</span> - We treat deadlines as commitments and not estimates.
             </li>
             <li>
-              From file preparation to final installation, we keep critical steps in-house—giving
-              clients consistency, control and fewer surprises.
+              <span>Full In-House Control</span> - File prep to final install, handled under one
+              roof.
             </li>
             <li>
-              Many of our clients have grown with us for years. We act as a production partner, not
-              just a vendor—advising on materials, formats and feasibility.
+              <span>Long-Term Partnership</span> - We advise on materials and feasibility, not just
+              fulfil orders.
             </li>
             <li>
-              Large structures and outdoor installs demand safe, compliant and durable solutions. We
-              build with structural integrity and long-term performance in mind.
+              <span>Built for the Outdoors</span> - Structural integrity and compliance on every
+              large-scale install.
             </li>
           </ul>
         </section>

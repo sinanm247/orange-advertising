@@ -1,7 +1,7 @@
 import "./CommonHero.scss";
 
 export default function CommonHero({
-  copy = "Thank you for your patience as we add projects to our showcase. Meanwhile, if you would like to see works from specific industries, please reach out for additional samples.",
+  copy = "Large format printing works produced in-house for brands across the UAE - from flex banners and 3D hoardings to rooftop installs, vehicle branding, and full façade wraps.",
   tone = "1",
   textColor = "secondary",
 }) {

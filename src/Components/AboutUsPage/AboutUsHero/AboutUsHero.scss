@@ -117,6 +117,11 @@
   color: rgba($secondary, 0.9);
 }
 
+.about-us-values li span {
+  font-weight: 600;
+  color: rgba($secondary, 0.98);
+}
+
 @keyframes aboutUsHeroMarquee {
   from {
     transform: translateX(0);

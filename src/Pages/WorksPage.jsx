@@ -9,7 +9,7 @@ export default function WorksPage() {
     <Fragment>
       <Helmet title="Works | Orange Advertising">
         <section className="works-page">
-          <CommonHero />
+          <CommonHero copy="Large format printing works produced in-house for brands across the UAE — from flex banners and 3D hoardings to rooftop installs, vehicle branding, and full façade wraps." />
           <WorksShowcase />
           {/* <ContactUs /> */}
         </section>

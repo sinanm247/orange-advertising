@@ -11,7 +11,7 @@ export default function ServicesPage() {
           <CommonHero
             tone="0"
             textColor="primary"
-            copy="From brand signage to installation-ready print systems, we deliver complete production services that scale with your campaign needs."
+            copy="From brand signage to installation-ready print systems, we deliver complete production services that scale with your campaign."
           />
           <Services />
         </section>

@@ -141,14 +141,14 @@ const worksData = [
   //   image: WorkImgStaticHoarding,
   //   featured: false,
   // },
-  {
-    id: "015",
-    title: "Digital Screen",
-    service: "LED Installation and Project Management",
-    client: "Mercedes Benz",
-    image: WorkImgDigitalScreen,
-    featured: false,
-  },
+  // {
+  //   id: "015",
+  //   title: "Digital Screen",
+  //   service: "LED Installation and Project Management",
+  //   client: "Mercedes Benz",
+  //   image: WorkImgDigitalScreen,
+  //   featured: false,
+  // },
   {
     id: "018",
     title: "Chalet Branding",

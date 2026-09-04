@@ -113,19 +113,20 @@ export default function AboutUsVisual() {
         <div className="about-us-visual__mission-vision-card">
           <h3 id="about-vision-heading">Our vision</h3>
           <p>
-            Make every print a story, done by precision production, bold scale and uncompromising
-            quality in large format printing.
+            To be the UAE&apos;s most trusted name in large format printing, where every project is
+            produced with precision, scaled without compromise, and built to be seen.
           </p>
         </div>
         <div className="about-us-visual__mission-vision-card">
           <h3 id="about-mission-heading">Our mission</h3>
           <ul>
-            <li>Offer high-quality printing and installation for various projects.</li>
-            <li>Foster long-term customer relationships through reliability and responsiveness.</li>
+            <li>Deliver high-quality printing and installation across every project we take on.</li>
+            <li>Build long-term client relationships through reliability and responsiveness.</li>
             <li>
-              Upgrade pre-press, printing, and finishing capabilities to meet industry standards.
+              Continuously upgrade our pre-press, printing, and finishing capabilities to stay ahead
+              of industry standards.
             </li>
-            <li>Deliver comprehensive support from file creation to distribution.</li>
+            <li>Provide complete support, from file creation through to final distribution.</li>
           </ul>
         </div>
       </aside>
