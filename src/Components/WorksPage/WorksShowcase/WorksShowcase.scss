@@ -68,8 +68,15 @@
   display: block;
 
   @media (min-width: 1025px) {
-    aspect-ratio: auto;
-    
+    height: auto;
+    aspect-ratio: 1500 / 1200;
+  }
+}
+
+.works-showcase__card:nth-child(4n + 1) .works-showcase__image,
+.works-showcase__card:nth-child(4n + 4) .works-showcase__image {
+  @media (min-width: 1025px) {
+    aspect-ratio: 1220 / 1200;
   }
 }
 
