@@ -168,7 +168,7 @@ export default function Services() {
       <div className="home-services__intro">
         <p className="home-services__eyebrow">Services</p>
         <div className="home-services__intro-left">
-          <h2 className="home-services__title tertiary-color">Undying Bonds</h2>
+          <h2 className="home-services__title tertiary-color">Range &amp; Reach</h2>
         </div>
         <p className="home-services__description">
           Our comprehensive product range, which continues to grow through

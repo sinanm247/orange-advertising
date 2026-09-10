@@ -3,14 +3,23 @@ import Header from "../../Common/Header/Header";
 import "./HomeHero.scss";
 import AnimatedButton from "../../../Styles/AnimatedButton/AnimatedButton";
 
-import heroVideo from "../../../assets/Banners/Banner-Video.mp4";
+// import heroVideo from "../../../assets/Banners/Banner-Video.mp4";
+import banner1 from "../../../assets/Banners/Banner-1.webp";
+import banner2 from "../../../assets/Banners/Banner-2.webp";
+import banner3 from "../../../assets/Banners/Banner-3.webp";
+import banner4 from "../../../assets/Banners/Banner-4.webp";
+import banner5 from "../../../assets/Banners/Banner-5.webp";
 import logoSecondary from "../../../assets/Logo/Logo-Icon-Secondary.png";
 import logoPrimary from "../../../assets/Logo/Logo-Icon-Primary.png";
+
+const heroBanners = [banner1, banner2, banner3, banner4, banner5];
+const BANNER_INTERVAL_MS = 4500;
 
 export default function HomeHero() {
   const sectionRef = useRef(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [pageScrollY, setPageScrollY] = useState(window.scrollY);
+  const [activeBanner, setActiveBanner] = useState(0);
   const [viewport, setViewport] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -49,6 +58,14 @@ export default function HomeHero() {
       window.removeEventListener("scroll", updateProgress);
       window.removeEventListener("resize", onResize);
     };
+  }, []);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveBanner((prev) => (prev + 1) % heroBanners.length);
+    }, BANNER_INTERVAL_MS);
+
+    return () => window.clearInterval(timer);
   }, []);
 
   const motionStyles = useMemo(() => {
@@ -216,9 +233,24 @@ export default function HomeHero() {
           <div className="home-hero__primary-bg" style={motionStyles.primaryBg} />
 
           <div className="home-hero__video-shell" style={motionStyles.videoShell}>
+            {/* Placeholder banners — video kept for later restore
             <video className="home-hero__video" autoPlay muted loop playsInline>
               <source src={heroVideo} type="video/mp4" />
             </video>
+            */}
+
+            <div className="home-hero__banner-slider" aria-hidden="true">
+              {heroBanners.map((banner, index) => (
+                <img
+                  key={`hero-banner-${index + 1}`}
+                  src={banner}
+                  alt=""
+                  className={`home-hero__banner ${
+                    index === activeBanner ? "home-hero__banner--active" : ""
+                  }`}
+                />
+              ))}
+            </div>
 
             <div className="home-hero__video-overlay" />
             <div className="home-hero__grain" />

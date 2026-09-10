@@ -43,6 +43,30 @@
   object-fit: cover;
 }
 
+.home-hero__banner-slider {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.home-hero__banner {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 1s ease, transform 4.5s ease;
+}
+
+.home-hero__banner--active {
+  opacity: 1;
+  transform: scale(1);
+  z-index: 1;
+}
+
 .home-hero__video-overlay {
   position: absolute;
   inset: 0;
