@@ -12,8 +12,12 @@ import banner5 from "../../../assets/Banners/Banner-5.webp";
 import logoSecondary from "../../../assets/Logo/Logo-Icon-Secondary.png";
 import logoPrimary from "../../../assets/Logo/Logo-Icon-Primary.png";
 
+/** Switch to "video" to restore the original giant ORANGE + video hero treatment. */
+const HERO_MEDIA = "banners";
+
 const heroBanners = [banner1, banner2, banner3, banner4, banner5];
-const BANNER_INTERVAL_MS = 4500;
+const BANNER_INTERVAL_MS = 5500;
+const isBannerHero = HERO_MEDIA === "banners";
 
 export default function HomeHero() {
   const sectionRef = useRef(null);
@@ -61,6 +65,10 @@ export default function HomeHero() {
   }, []);
 
   useEffect(() => {
+    if (!isBannerHero) {
+      return undefined;
+    }
+
     const timer = window.setInterval(() => {
       setActiveBanner((prev) => (prev + 1) % heroBanners.length);
     }, BANNER_INTERVAL_MS);
@@ -76,10 +84,15 @@ export default function HomeHero() {
       b: mixChannel(from.b, to.b, phase),
     });
 
-    const easeOut = 1 - (1 - scrollProgress) ** 3;
-    const latePhase = Math.min(Math.max((scrollProgress - 0.55) / 0.45, 0), 1);
-    const colorPhase = Math.min(Math.max((scrollProgress - 0.48) / 0.24, 0), 1);
-    const logoSwapPhase = Math.min(Math.max((latePhase - 0.75) / 0.25, 0), 1);
+    const latePhaseRaw = Math.min(Math.max((scrollProgress - 0.55) / 0.45, 0), 1);
+    // Banner mode: keep the small logo lockup in the header from the start (no giant ORANGE).
+    const latePhase = isBannerHero ? 1 : latePhaseRaw;
+    const colorPhase = isBannerHero
+      ? 1
+      : Math.min(Math.max((scrollProgress - 0.48) / 0.24, 0), 1);
+    const logoSwapPhase = isBannerHero
+      ? 1
+      : Math.min(Math.max((latePhaseRaw - 0.75) / 0.25, 0), 1);
 
     const centerX = viewport.width / 2;
     const centerY = viewport.height / 2;
@@ -111,7 +124,7 @@ export default function HomeHero() {
     );
     const headerNavShift = Math.min(-brandShiftX, maxSafeShift);
     const headerBgPhase = Math.min(Math.max((scrollProgress - 0.8) / 0.2, 0), 1);
-    const ctaOpacity = 1 - Math.min(scrollProgress * 2.5, 1);
+    const contentFade = 1 - Math.min(scrollProgress * 2.2, 1);
     const footerNode = document.querySelector(".site-footer");
     const footerRect = footerNode?.getBoundingClientRect();
     const footerStart = viewport.height * 0.52;
@@ -134,17 +147,22 @@ export default function HomeHero() {
     const imageScaleBoost = 1 + 2.6 * logoSwapPhase;
     const finalImageScaleBoost = imageScaleBoost * (1 - 0.38 * easedFooterMovePhase);
     const imageLogoTransform = `translate(-50%, -50%) translate(${finalShiftX}px, ${finalShiftY}px) scale(${finalBrandScale * finalImageScaleBoost})`;
-    const baseTextOpacity = 1 - logoSwapPhase;
+    // Banner: hide ORANGE text on the hero, but keep the same footer text-flip as video mode.
+    const baseTextOpacity = isBannerHero ? 0 : 1 - logoSwapPhase;
     const baseImageOpacity = logoSwapPhase;
-    const baseTextRotate = 90 * logoSwapPhase;
-    const baseImageRotate = -90 + 90 * logoSwapPhase;
-    const footerTextOpacity = baseTextOpacity + (1 - baseTextOpacity) * easedFooterFlipPhase;
+    const baseTextRotate = isBannerHero ? 90 : 90 * logoSwapPhase;
+    const baseImageRotate = isBannerHero ? 0 : -90 + 90 * logoSwapPhase;
+    const footerTextOpacity = isBannerHero
+      ? easedFooterFlipPhase
+      : baseTextOpacity + (1 - baseTextOpacity) * easedFooterFlipPhase;
     let footerImageOpacity = baseImageOpacity * (1 - easedFooterFlipPhase);
     if (footerFlipPhase > 0.82) {
       footerImageOpacity = 0;
     }
     const footerTextRotate = baseTextRotate * (1 - easedFooterFlipPhase);
-    const footerImageRotate = baseImageRotate + (-90 - baseImageRotate) * easedFooterFlipPhase;
+    const footerImageRotate = isBannerHero
+      ? -90 * easedFooterFlipPhase
+      : baseImageRotate + (-90 - baseImageRotate) * easedFooterFlipPhase;
     const worksSection = document.getElementById("works");
     const servicesSection = document.getElementById("services");
     const contactSection = document.getElementById("contact");
@@ -209,7 +227,8 @@ export default function HomeHero() {
         transform: `translateX(${headerNavShift * (1 - easedFooterMovePhase)}px)`,
         marginRight: `${80 * latePhase * (1 - footerMovePhase)}px`,
       },
-      cta: { opacity: ctaOpacity },
+      content: { opacity: contentFade },
+      cta: { opacity: contentFade },
     };
   }, [pageScrollY, scrollProgress, viewport.height, viewport.width]);
 
@@ -228,43 +247,75 @@ export default function HomeHero() {
         logoAltImageStyle={motionStyles.brandImageAlt}
       />
 
-      <section className="home-hero" ref={sectionRef}>
+      <section
+        className={`home-hero ${isBannerHero ? "home-hero--banners" : "home-hero--video"}`}
+        ref={sectionRef}
+      >
         <div className="home-hero__sticky">
           <div className="home-hero__primary-bg" style={motionStyles.primaryBg} />
 
           <div className="home-hero__video-shell" style={motionStyles.videoShell}>
-            {/* Placeholder banners — video kept for later restore
+            {/* VIDEO HERO MEDIA — restore with HERO_MEDIA = "video"
             <video className="home-hero__video" autoPlay muted loop playsInline>
               <source src={heroVideo} type="video/mp4" />
             </video>
             */}
 
-            <div className="home-hero__banner-slider" aria-hidden="true">
-              {heroBanners.map((banner, index) => (
-                <img
-                  key={`hero-banner-${index + 1}`}
-                  src={banner}
-                  alt=""
-                  className={`home-hero__banner ${
-                    index === activeBanner ? "home-hero__banner--active" : ""
-                  }`}
-                />
-              ))}
-            </div>
+            {isBannerHero && (
+              <div className="home-hero__banner-slider" aria-hidden="true">
+                {heroBanners.map((banner, index) => (
+                  <img
+                    key={`hero-banner-${index + 1}`}
+                    src={banner}
+                    alt=""
+                    className={`home-hero__banner ${
+                      index === activeBanner ? "home-hero__banner--active" : ""
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
 
-            <div className="home-hero__video-overlay" />
-            <div className="home-hero__grain" />
-            <div className="home-hero__art" />
+            {/* VIDEO-ERA overlays (heavy orange radials + grain + center glow) */}
+            {!isBannerHero && (
+              <>
+                <div className="home-hero__video-overlay" />
+                <div className="home-hero__grain" />
+                <div className="home-hero__art" />
+              </>
+            )}
+
+            {/* Banner-era overlay: quieter vignette so photos + headline stay legible */}
+            {isBannerHero && <div className="home-hero__banner-overlay" />}
           </div>
 
-          <div className="home-hero__content" />
-
-          <AnimatedButton
-            href="#contact"
-            label="Start a Project"
-            className="home-hero__cta"
-            style={motionStyles.cta}
-          />
+          {isBannerHero ? (
+            <div className="home-hero__content" style={motionStyles.content}>
+              <p className="home-hero__eyebrow">Dubai since 2004</p>
+              <h2 className="home-hero__headline">
+                We turn bold ideas into large format reality.
+              </h2>
+              <p className="home-hero__support">
+                Indoor and outdoor visuals produced in-house<br />- print, fabricate, install.
+              </p>
+              <AnimatedButton
+                href="#contact"
+                label="Start a Project"
+                className="home-hero__cta home-hero__cta--primary"
+              />
+            </div>
+          ) : (
+            <>
+              {/* VIDEO-ERA layout: empty content + corner CTA */}
+              <div className="home-hero__content" />
+              <AnimatedButton
+                href="#contact"
+                label="Start a Project"
+                className="home-hero__cta"
+                style={motionStyles.cta}
+              />
+            </>
+          )}
         </div>
       </section>
     </>

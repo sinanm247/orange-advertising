@@ -18,7 +18,7 @@ export default function ContactUs({ enableBgTone = true } = {}) {
             <br />
             in mind?
             <br />
-            Let&apos;s bond.
+            Let&apos;s talk.
           </h2>
         </div>
 

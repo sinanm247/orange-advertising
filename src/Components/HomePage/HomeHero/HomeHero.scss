@@ -57,8 +57,8 @@
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  transform: scale(1.04);
-  transition: opacity 1s ease, transform 4.5s ease;
+  transform: scale(1.02);
+  transition: opacity 1.1s ease, transform 5.5s ease;
 }
 
 .home-hero__banner--active {
@@ -67,6 +67,7 @@
   z-index: 1;
 }
 
+/* VIDEO-ERA overlays — kept for HERO_MEDIA = "video" */
 .home-hero__video-overlay {
   position: absolute;
   inset: 0;
@@ -98,6 +99,23 @@
     radial-gradient(ellipse at 51% 48%, rgba(32, 15, 7, 0.17) 0, transparent 36%);
 }
 
+/* Banner-era overlay: quiet vignette, no competing orange glow */
+.home-hero__banner-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      105deg,
+      rgba(20, 10, 4, 0.72) 0%,
+      rgba(20, 10, 4, 0.45) 38%,
+      rgba(20, 10, 4, 0.18) 68%,
+      rgba(20, 10, 4, 0.28) 100%
+    ),
+    linear-gradient(to top, rgba(20, 10, 4, 0.35) 0%, transparent 42%);
+}
+
 .home-hero__content {
   position: relative;
   z-index: 6;
@@ -110,6 +128,44 @@
   }
 }
 
+.home-hero--banners .home-hero__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: clamp(14px, 1.8vw, 22px);
+  max-width: min(980px, 94vw);
+  padding: clamp(100px, 12vh, 140px) clamp(24px, 4vw, 48px) clamp(48px, 8vh, 72px);
+  color: $secondary;
+}
+
+.home-hero__eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: clamp(11px, 1vw, 13px);
+  opacity: 0.88;
+}
+
+.home-hero__headline {
+  margin: 0;
+  font-family: "Helvena", Helvetica, Arial, sans-serif;
+  font-size: clamp(34px, 5.4vw, 68px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  max-width: min(18em, 100%);
+}
+
+.home-hero__support {
+  margin: 0;
+  max-width: min(42em, 100%);
+  font-size: clamp(15px, 1.35vw, 20px);
+  line-height: 1.35;
+  font-weight: 300;
+  opacity: 0.92;
+}
+
 .home-hero__cta {
   position: absolute;
   right: 40px;
@@ -119,9 +175,16 @@
   height: 42px;
 }
 
-.home-hero__cta.btn--svg {
-  position: absolute;
+.home-hero__cta--primary {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  margin-top: clamp(8px, 1.5vw, 16px);
+  width: 210px;
+  height: 48px;
+}
 
+.home-hero__cta.btn--svg {
   &:hover {
     .btn--svg__label {
       color: $secondary;
@@ -135,5 +198,12 @@
   @media (max-width: 1024px) {
     right: 24px;
     bottom: 24px;
+  }
+}
+
+.home-hero__cta--primary.btn--svg {
+  @media (max-width: 1024px) {
+    right: auto;
+    bottom: auto;
   }
 }
