@@ -92,7 +92,7 @@ export default function Works() {
                 <article className="home-works__card" key={work.id}>
                   <img src={work.image} alt={work.title} className="home-works__image" />
                   <div className="home-works__meta">
-                    <span className="tertiary-color">({work.id})</span>
+                    {/* <span className="tertiary-color">({work.id})</span> */}
                     <h3 className="quaternary-color">{work.title}</h3>
                     <div className="home-works__meta-row">
                       <p className="home-works__client">{work.client}</p>

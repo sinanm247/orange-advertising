@@ -115,7 +115,7 @@ const worksData = [
     client: "",
     image: Image21,
     imageNarrow: Image21Narrow,
-    featured: false,
+    featured: true,
   },
   {
     id: "004",
