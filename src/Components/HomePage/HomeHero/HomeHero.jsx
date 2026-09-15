@@ -9,15 +9,27 @@ import banner2 from "../../../assets/Banners/Banner-2.webp";
 import banner3 from "../../../assets/Banners/Banner-3.webp";
 import banner4 from "../../../assets/Banners/Banner-4.webp";
 import banner5 from "../../../assets/Banners/Banner-5.webp";
+import bannerMobile1 from "../../../assets/Banners/Banner-Mobile-1.webp";
+import bannerMobile2 from "../../../assets/Banners/Banner-Mobile-2.webp";
+import bannerMobile3 from "../../../assets/Banners/Banner-Mobile-3.webp";
+import bannerMobile4 from "../../../assets/Banners/Banner-Mobile-4.webp";
+import bannerMobile5 from "../../../assets/Banners/Banner-Mobile-5.webp";
 import logoSecondary from "../../../assets/Logo/Logo-Icon-Secondary.png";
 import logoPrimary from "../../../assets/Logo/Logo-Icon-Primary.png";
 
 /** Switch to "video" to restore the original giant ORANGE + video hero treatment. */
 const HERO_MEDIA = "banners";
 
-const heroBanners = [banner1, banner2, banner3, banner4, banner5];
+const heroBanners = [
+  { desktop: banner1, mobile: bannerMobile1 },
+  { desktop: banner2, mobile: bannerMobile2 },
+  { desktop: banner3, mobile: bannerMobile3 },
+  { desktop: banner4, mobile: bannerMobile4 },
+  { desktop: banner5, mobile: bannerMobile5 },
+];
 const BANNER_INTERVAL_MS = 5500;
 const isBannerHero = HERO_MEDIA === "banners";
+const MOBILE_BANNER_MQ = "(max-width: 1024px)";
 
 export default function HomeHero() {
   const sectionRef = useRef(null);
@@ -264,14 +276,15 @@ export default function HomeHero() {
             {isBannerHero && (
               <div className="home-hero__banner-slider" aria-hidden="true">
                 {heroBanners.map((banner, index) => (
-                  <img
+                  <picture
                     key={`hero-banner-${index + 1}`}
-                    src={banner}
-                    alt=""
                     className={`home-hero__banner ${
                       index === activeBanner ? "home-hero__banner--active" : ""
                     }`}
-                  />
+                  >
+                    <source media={MOBILE_BANNER_MQ} srcSet={banner.mobile} />
+                    <img src={banner.desktop} alt="" className="home-hero__banner-img" />
+                  </picture>
                 ))}
               </div>
             )}

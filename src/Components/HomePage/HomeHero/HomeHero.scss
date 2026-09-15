@@ -55,10 +55,16 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
   opacity: 0;
   transform: scale(1.02);
   transition: opacity 1.1s ease, transform 5.5s ease;
+}
+
+.home-hero__banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .home-hero__banner--active {

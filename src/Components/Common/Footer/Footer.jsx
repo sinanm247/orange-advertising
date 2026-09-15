@@ -1,6 +1,10 @@
 import "./Footer.scss";
 import AnimatedButton2 from "../../../Styles/AnimatedButton2/AnimatedButton2";
 
+const PHONE_DISPLAY = "+971 50 385 6208";
+const PHONE_HREF = "tel:+971503856208";
+const EMAIL = "bharatojha@orangeadv.ae";
+
 const tickerItems = [
   "Dubai Office Since 2004",
   "Large Format Digital Printing",
@@ -14,9 +18,30 @@ export default function Footer() {
   return (
     <footer className="site-footer" id="footer">
       <div className="site-footer__actions">
-        <AnimatedButton2 href="#" label="Project Inquiries" className="site-footer__pill" />
-        <AnimatedButton2 href="#" label="Make a Call" className="site-footer__pill" />
-        <AnimatedButton2 href="#" label="Chat with Us" className="site-footer__pill" />
+        <AnimatedButton2
+          href="/contact"
+          label="Project Inquiries"
+          className="site-footer__pill"
+        />
+        <AnimatedButton2
+          href={PHONE_HREF}
+          label="Make a Call"
+          className="site-footer__pill"
+        />
+        <AnimatedButton2
+          href={`mailto:${EMAIL}`}
+          label="Email Us"
+          className="site-footer__pill"
+        />
+      </div>
+
+      <div className="site-footer__contact">
+        <a href={PHONE_HREF} className="site-footer__contact-link">
+          {PHONE_DISPLAY}
+        </a>
+        <a href={`mailto:${EMAIL}`} className="site-footer__contact-link">
+          {EMAIL}
+        </a>
       </div>
 
       <div className="site-footer__ticker" aria-label="Company highlights">
